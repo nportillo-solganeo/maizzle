@@ -1,0 +1,25 @@
+<script props>
+  module.exports = {
+    label: props.label || '#',
+    link: props.link || '',
+    linkTitle: props.linkTitle || '',
+    msoStyles: props.msoStyles || '',
+    isPrimary: props.isPrimary !== undefined ? 'isPrimary' : null
+
+  }
+</script>
+<!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{link}}"
+    style="{{msoStyles}}"
+    arcsize="12%" stroke="f" fillcolor="#4a90e2">
+    <w:anchorlock/>
+    <center style="color:#fff; font-family:Arial; font-size:16px;">
+      {{label}}
+    </center>
+  </v:roundrect>
+  <![endif]-->
+<!--[if !mso]><!-->
+<a href="{{link}}" title="{{linkTitle}}" class="{{isPrimary}} btn">
+  <yield />
+</a>
+<!--<![endif]-->

@@ -1,0 +1,33 @@
+<script props>
+  module.exports = {
+    hAlign: props.hAlign ? `text-${props.hAlign}` : "",
+    vAlign: props.vAlign ? `align-${props.vAlign}` : "",
+    widthLeft: props.widthLeft || "",
+    widthRight: props.widthRight || "",
+    isResponsive: props.responsive !== "false"
+  };
+</script>
+<table class="w-full">
+  <tr>
+    <if condition="isResponsive">
+      <th role="cell" class="{{widthLeft}} {{hAlign}} {{vAlign}} sm:block sm:w-full font-base dark:text-white">
+        <slot:leftColumn />
+        <yield />
+      </th>
+      <th role="cell" class="{{widthRight}} {{hAlign}} {{vAlign}} sm:block sm:w-full font-base dark:text-white">
+        <slot:rightColumn />
+        <yield />
+      </th>
+    </if>
+    <else>
+      <th role="cell" class="{{widthLeft}} {{hAlign}} {{vAlign}} font-base dark:text-white">
+        <slot:leftColumn />
+        <yield />
+      </th>
+      <th role="cell" class="{{widthRight}} {{hAlign}} {{vAlign}} font-base  dark:text-white">
+        <slot:rightColumn />
+        <yield />
+      </th>
+    </else>
+  </tr>
+</table>

@@ -1,0 +1,13 @@
+<script props>
+  module.exports = {
+    logoLink: props.logoLink || '',
+    logoSrc: props.logoSrc || '',
+    logoSrcDark: props.logoSrcDark || '',
+    mainTitle: props.mainTitle || 'Header Title',
+  }
+</script>
+
+<div>
+  <x-logo logoLink="{{ logoLink }}" logoSrc="{{ logoSrc }}" logoSrcDark="{{ logoSrcDark }}" class="w-full" />
+  <x-atoms.title tag="h1" class="text-center mt-6 px-6">{{ mainTitle }}</x-atoms.title>
+</div>

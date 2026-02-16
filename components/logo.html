@@ -1,0 +1,15 @@
+<script props>
+  module.exports = {
+    logoLink: props.logoLink || '',
+    logoLinkTitle: props.logoLinkTitle || '',
+    logoSrc: props.logoSrc || '',
+    logoSrcDark: props.logoSrcDark || '',
+  }
+</script>
+
+<div>
+  <a href="{{ logoLink }}" title="{{ logoLinkTitle }}" target="_blank" class="decoration-none">
+    <x-atoms.image imgSrc="{{ logoSrcDark }}" alt="Logo" class="logo-dark" style="display: none; border: 0px;" />
+    <x-atoms.image imgSrc="{{ logoSrc }}" alt="Logo" class="logo-light" style="display: block; border: 0px;" />
+  </a>
+</div>

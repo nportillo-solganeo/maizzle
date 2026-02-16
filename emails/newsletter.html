@@ -1,0 +1,56 @@
+---
+bodyClass: bg-slate-50 font-base
+preheader: Newsletter email template
+---
+
+
+<x-newsletter>
+
+
+  <table class="w-full max-w-[600px] border-none m-auto bg-slate-500" align="center" role="presentation">
+    <tr>
+      <td class="text-center">
+        <x-header logoLink="https://www.google.fr" mainTitle="Newsletter Header Title"
+          logoSrc="https://placehold.co/600x400/000000/FFFFFF.png"
+          logoSrcDark="https://placehold.co/600x400/ffffff/000.png">
+        </x-header>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" class="p-6">
+        test
+      </td>
+    </tr>
+    <each loop="i in [1,2,3]">
+      <tr>
+        <td align="center" class="py-4">
+          <x-atoms.btn link="https://google.com" linkTitle="Google website"
+            classes="bg-purple-500 py-4 px-6 text-white m-auto inline-block rounded-md no-underline">Label-{{i}}</x-atoms.btn>
+        </td>
+      </tr>
+    </each>
+
+    <tr>
+      <td>
+
+        <x-twocols isResponsive="false" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
+          <fill:leftColumn>
+            <x-atoms.card class="w-full">
+              <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product">
+            </x-atoms.card>
+          </fill:leftColumn>
+          <fill:rightColumn>
+            <x-atoms.card class="w-full">
+              <x-atoms.title tag="h3">Produit 1</x-atoms.title>
+              <p>Description du produit</p>
+              <x-atoms.btn isPrimary link="https://www.google.fr" title="google">
+                bouton
+              </x-atoms.btn>
+            </x-atoms.card>
+          </fill:rightColumn>
+        </x-twocols>
+
+      </td>
+    </tr>
+
+</x-newsletter>
