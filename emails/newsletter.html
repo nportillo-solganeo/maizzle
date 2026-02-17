@@ -7,8 +7,8 @@ preheader: Newsletter email template
 <x-main>
 
 
-  <table class="w-full max-w-[600px] border-none m-auto bg-slate-500 dark:bg-slate-900 dark:text-white" align="center"
-    role="presentation">
+  <table border="0" class="w-full max-w-[600px] border-none m-auto bg-slate-500 dark:bg-slate-900 dark:text-white"
+    align="center" role="presentation">
     <tr>
       <td class="text-center">
         <x-header logoLink="https://www.google.fr" mainTitle="Newsletter Header Title"
@@ -45,10 +45,11 @@ preheader: Newsletter email template
               <x-atoms.title tag="h3">Produit 1</x-atoms.title>
 
               <p>Description du produit</p>
-
-              <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="py-4">
+              <x-spacer height="1"></x-spacer>
+              <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="no-underline">
                 bouton
               </x-atoms.btn>
+              <x-spacer height="1"></x-spacer>
             </x-atoms.wrapper>
 
           </fill:rightColumn>
@@ -86,6 +87,7 @@ preheader: Newsletter email template
                     bouton
                   </x-atoms.btn>
                 </fill:cta>
+                <x-spacer height="1"></x-spacer>
               </x-atoms.card>
 
             </fill:leftColumn>
@@ -105,6 +107,7 @@ preheader: Newsletter email template
                   <x-atoms.btn isPrimary link="https://www.google.fr" title="google">
                     bouton
                   </x-atoms.btn>
+                  <x-spacer height="1"></x-spacer>
                 </fill:cta>
               </x-atoms.card>
             </fill:rightColumn>

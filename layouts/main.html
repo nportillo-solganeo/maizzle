@@ -42,10 +42,20 @@ page.bodyClass || ''
       <each loop="item in Array.from(Array(150))">&#8199;&#65279;&#847; </each>
     </div>
   </if>
+
+  <outlook>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+      <tr>
+        <td>
+  </outlook>
   <div role="article" aria-roledescription="email" aria-label="{{{ page.title || '' }}}"
     lang="{{ page.language || 'en' }}">
     <yield />
   </div>
+  <outlook>
+    </td>
+    </tr>
+    </table>
 </body>
 
 </html>
