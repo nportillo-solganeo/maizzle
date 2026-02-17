@@ -1,14 +1,15 @@
 <!DOCTYPE {{{ page.doctype || 'html' }}}>
-
-<head lang="{{ page.language || 'en' }}" xmlns:v="urn:schemas-microsoft-com:vml"
+<html lang="{{ page.language || 'en' }}" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
 
   <meta charset="{{page.charset || 'utf-8'}}" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="x-apple-disable-message-reformatting" />
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no" />
   <meta name="color-scheme" content="light dark" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
   <!--[if mso]>
       <noscript>
         <xml>
@@ -20,6 +21,7 @@
       <style>
         td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: arial, sans-serif; mso-line-height-rule: exactly;}
         .mso-break-all {word-break: break-all;}
+        table {border-collapse: collapse;}
       </style>
     <![endif]-->
   <title>{{ page.title || 'Newsletter' }}</title>

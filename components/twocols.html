@@ -1,56 +1,61 @@
 <script props>
   module.exports = {
     hAlign: props.hAlign ? `text-${props.hAlign}` : "",
-    vAlign: props.vAlign ? `align-${props.vAlign}` : "",
+    vAlign: props.vAlign || "top",
     widthLeft: props.widthLeft || "w-1/2",
     widthRight: props.widthRight || "w-1/2",
     shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
-    msoWidthLeft: props.widthLeft === "w-1/2" ? "300" : props.msoWidthLeft,
-    msoWidthRight: props.widthRight === "w-1/2" ? "300" : props.msoWidthRight
+    msoWidthLeft: props.msoWidthLeft || (props.widthLeft === "w-1/3" ? "200" : props.widthLeft === "w-2/3" ? "400" : "300"),
+    msoWidthRight: props.msoWidthRight || (props.widthRight === "w-1/3" ? "200" : props.widthRight === "w-2/3" ? "400" : "300")
   };
 </script>
 <if condition="shouldStack">
-  <table class="w-full">
+  <table class="w-full" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
     <tr role="row">
-      <outlook>
-        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
-
-      </outlook>
+      <!--[if mso]>
+        <td width="{{msoWidthLeft}}" valign="{{vAlign}}" style="vertical-align: {{vAlign}};">
+      <![endif]-->
       <th role="cell"
-        class="{{widthLeft}} {{hAlign}} {{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
+        class="{{widthLeft}} {{hAlign}} align-{{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
         <slot:leftColumn />
         <yield />
       </th>
+      <!--[if mso]>
+        </td>
+        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}" style="vertical-align: {{vAlign}};">
+      <![endif]-->
       <th role="cell"
-        class="{{widthRight}} {{hAlign}} {{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
+        class="{{widthRight}} {{hAlign}} align-{{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
         <slot:rightColumn />
         <yield />
       </th>
-      <outlook>
+      <!--[if mso]>
         </td>
-        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
-      </outlook>
+      <![endif]-->
     </tr>
   </table>
 </if>
 <else>
-  <table class="w-full">
+  <table class="w-full" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
     <tr role="row">
-      <outlook>
-        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
-      </outlook>
-      <th role="cell" class="{{widthLeft}} {{hAlign}} {{vAlign}} font-base dark:text-white">
+      <!--[if mso]>
+        <td width="{{msoWidthLeft}}" valign="{{vAlign}}" style="vertical-align: {{vAlign}};">
+      <![endif]-->
+      <th role="cell" class="{{widthLeft}} {{hAlign}} align-{{vAlign}} font-base dark:text-white">
         <slot:leftColumn />
         <yield />
       </th>
-      <th role="cell" class="{{widthRight}} {{hAlign}} {{vAlign}} font-base  dark:text-white">
+      <!--[if mso]>
+        </td>
+        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}" style="vertical-align: {{vAlign}};">
+      <![endif]-->
+      <th role="cell" class="{{widthRight}} {{hAlign}} align-{{vAlign}} font-base  dark:text-white">
         <slot:rightColumn />
         <yield />
       </th>
-      <outlook>
+      <!--[if mso]>
         </td>
-        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
-      </outlook>
+      <![endif]-->
     </tr>
   </table>
 </else>
