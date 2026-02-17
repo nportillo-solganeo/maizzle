@@ -1,9 +1,18 @@
 <script props>
+  let hasHeight = props.imgHeight && props.imgHeight !== 'auto'
+  let heightStyle = hasHeight ? props.imgHeight : 'auto'
+  
   module.exports = {
     imgSrc: props.imgSrc || '',
     alt: props.alt || '',
     imgWidth: props.imgWidth || '',
-    imgHeight: props.imgHeight || 'auto'
+    imgHeight: hasHeight ? props.imgHeight : null,
+    heightStyle: heightStyle
   }
 </script>
-<img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ imgWidth }}" height="{{ imgHeight }}" style="display: block; max-width: 100%; height: {{ imgHeight }}; border: 0;" />
+<if condition="imgHeight">
+  <img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ imgWidth }}" height="{{ imgHeight }}" style="display: block; max-width: 100%; border: 0;" />
+</if>
+<else>
+  <img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ imgWidth }}" style="display: block; max-width: 100%; height: auto; border: 0;" />
+</else>
