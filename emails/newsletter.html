@@ -1,6 +1,7 @@
 ---
-bodyClass: bg-slate-50 font-base
 preheader: Newsletter email template
+title: Newsletter Solganeo
+bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-base
 ---
 
 
@@ -11,19 +12,20 @@ preheader: Newsletter email template
       <tr>
         <td width="600">
   </outlook>
-  <table border="0" class="w-full max-w-[600px] border-none m-auto bg-slate-500 dark:bg-slate-900 dark:text-white"
+  <table border="0"
+    class="w-full max-w-[600px] border-none m-auto bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-200"
     align="center" role="presentation">
     <tr>
       <td class="text-center">
-        <x-header logoLink="https://www.google.fr" mainTitle="Newsletter Header Title"
-          logoSrc="https://placehold.co/600x400/000000/FFFFFF.png"
-          logoSrcDark="https://placehold.co/600x400/ffffff/000.png">
+        <x-header logoLink="https://www.solganeo.com" mainTitle="Newsletter Header Title" logoSrc="solganeo-logo.png"
+          logoSrcDark="solganeo-logo.png">
         </x-header>
       </td>
     </tr>
     <tr>
-      <td align="center" class="p-6">
-        test
+      <td align=" center" class="p-6">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore magnam commodi culpa minima dicta, natus
+        asperiores? Tempora voluptas magni, nam eaque dignissimos harum. Impedit deleniti error doloribus, sequi in vel.
       </td>
     </tr>
 
@@ -35,7 +37,14 @@ preheader: Newsletter email template
     </tr>
 
     <tr>
-      <td class="p-0 pt-4">
+      <td align="left">
+        <x-spacer height="4"></x-spacer>
+        <x-atoms.title tag="h2" class="text-left px-4">Produit en vedette</x-atoms.title>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="px-4 py-0 sm:px-0 sm:pb-4">
 
         <x-twocols isResponsive widthLeft="w-1/3" widthRight="w-2/3" hAlign="center" vAlign="top" class="bg-none">
           <fill:leftColumn>
@@ -65,21 +74,23 @@ preheader: Newsletter email template
     </tr>
 
     <tr>
-      <td>
-        <x-spacer height="1"></x-spacer>
+      <td align="left">
+        <x-spacer height="4"></x-spacer>
+        <x-atoms.title tag="h2" class="text-left px-4">Derniers produits ajoutés</x-atoms.title>
       </td>
     </tr>
 
     <each loop="i in [1,2,3]">
       <tr>
         <td>
-          <x-twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
+          <x-twocols isResponsive="false" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
             <fill:leftColumn>
 
 
               <x-atoms.card class="w-full m-2 sm:mx-0 sm:my-2">
                 <fill:image>
-                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300">
+                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300"
+                    class="rounded-t sm:w-full">
                 </fill:image>
 
                 <fill:title>
@@ -100,7 +111,8 @@ preheader: Newsletter email template
             <fill:rightColumn>
               <x-atoms.card class="w-full m-2 sm:mx-0 sm:my-2">
                 <fill:image>
-                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300">
+                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300"
+                    class="rounded-t sm:w-full">
                 </fill:image>
 
                 <fill:title>
