@@ -1,12 +1,17 @@
 <script props>
-  module.export = {
+  module.exports = {
     class: props.class || ''
   }
 </script>
 
-<table class="w-full  border-0 p-0 align-top" role="presentation">
+<table class="w-full border-0 p-0 align-top" role="presentation">
   <tr>
-    <td class="p-4 bg-gray-200 text-slate-800">
+    <td class="p-4 bg-gray-300 text-slate-800 dark:bg-gray-700 dark:text-slate-200 {{class}}">
+      <slot:image />
+      <slot:title />
+      <slot:description />
+      <x-spacer size="2" />
+      <slot:cta />
       <yield />
     </td>
   </tr>

@@ -1,0 +1,15 @@
+<script props>
+  module.exports = {
+    class: props.class || ''
+  }
+
+
+</script>
+
+<table class="w-full">
+  <tr>
+    <td class="{{class}}">
+      <yield />
+    </td>
+  </tr>
+</table>

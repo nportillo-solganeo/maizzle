@@ -11,7 +11,7 @@ module.exports = {
   theme: {
 		extend: {
 			fontFamily: {
-				base: ["Arial", "Helvetica", "sans-serif"],
+				base: ["Verdana", "Helvetica", "sans-serif"],
 			},
 		},
 	},

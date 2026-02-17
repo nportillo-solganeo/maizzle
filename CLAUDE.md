@@ -47,8 +47,8 @@ Components can have logic via `<script props>`:
 <script props>
   module.exports = {
     href: props.href,
-    styles: 'display: inline-block;',
-  }
+    styles: "display: inline-block;",
+  };
 </script>
 
 <a href="{{{ href }}}" style="{{ styles }}">
@@ -80,20 +80,24 @@ Components can have logic via `<script props>`:
 ### Email-Specific Features
 
 **Outlook/MSO Support:**
+
 - Components include `<outlook>` tags for Outlook-specific code
 - MSO conditional comments in layouts (`<!--[if mso]>`)
 - Use `mso-*` utility classes for Outlook styling
 
 **Preheader:**
+
 - Defined in frontmatter: `preheader: Preview text`
 - Automatically hidden and padded with invisible characters
 - Appears in email client preview pane
 
 **Image Paths:**
+
 - Development: Use relative paths (e.g., `src="logo.png"`)
 - Production: Use `src-production` attribute for build-time path replacement
 
 **Tailwind in Emails:**
+
 - Use email-safe utilities from `tailwindcss-preset-email`
 - Classes are processed by `@tailwind` directives in layout `<style>` tag
 - Production build inlines all CSS into `style=""` attributes
@@ -115,3 +119,5 @@ build_production/ - Production build output (gitignored)
 - Table-based layouts are used for email client compatibility (not div-based)
 - Use `sm:` prefix for responsive classes (mobile viewports)
 - Avoid modern CSS features not supported in email clients (Grid, Flexbox limited)
+- be careful with email compatibility over email clients such as outlook and gmail
+- answer in french
