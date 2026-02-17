@@ -6,7 +6,11 @@ preheader: Newsletter email template
 
 <x-main>
 
-
+  <outlook>
+    <table width="600" align="center" cellspacing="0" cellpadding="0" role="none">
+      <tr>
+        <td width="600">
+  </outlook>
   <table border="0" class="w-full max-w-[600px] border-none m-auto bg-slate-500 dark:bg-slate-900 dark:text-white"
     align="center" role="presentation">
     <tr>
@@ -36,7 +40,8 @@ preheader: Newsletter email template
         <x-twocols isResponsive widthLeft="w-1/3" widthRight="w-2/3" hAlign="center" vAlign="top" class="bg-none">
           <fill:leftColumn>
 
-            <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" class="w-full">
+            <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" class="w-full"
+              imgWidth="200">
 
           </fill:leftColumn>
           <fill:rightColumn>
@@ -46,8 +51,9 @@ preheader: Newsletter email template
 
               <p>Description du produit</p>
               <x-spacer height="1"></x-spacer>
-              <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="no-underline">
-                bouton
+              <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="no-underline"
+                msoLabel="En savoir plus">
+                En savoir plus
               </x-atoms.btn>
               <x-spacer height="1"></x-spacer>
             </x-atoms.wrapper>
@@ -64,27 +70,27 @@ preheader: Newsletter email template
       </td>
     </tr>
 
-    <each loop="i in [1,2,3,4]">
+    <each loop="i in [1,2,3]">
       <tr>
         <td>
-          <x-twocols isResponsive="false" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
+          <x-twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
             <fill:leftColumn>
 
 
               <x-atoms.card class="w-full m-2 sm:mx-0 sm:my-2">
                 <fill:image>
-                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product">
+                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300">
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">Produit 1</x-atoms.title>
+                  <x-atoms.title tag="h3">Produit {{i*2-1}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
-                  <p>Description du produit</p>
+                  <p>Description du produit {{i*2-1}}</p>
                 </fill:description>
                 <fill:cta>
-                  <x-atoms.btn link="https://www.google.fr" title="google">
-                    bouton
+                  <x-atoms.btn link="https://www.google.fr" title="google" msoLabel="Découvrir">
+                    Découvrir
                   </x-atoms.btn>
                 </fill:cta>
                 <x-spacer height="1"></x-spacer>
@@ -94,18 +100,18 @@ preheader: Newsletter email template
             <fill:rightColumn>
               <x-atoms.card class="w-full m-2 sm:mx-0 sm:my-2">
                 <fill:image>
-                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product">
+                  <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product" imgWidth="300">
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">Produit 1</x-atoms.title>
+                  <x-atoms.title tag="h3">Produit {{i*2}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
-                  <p>Description du produit</p>
+                  <p>Description du produit {{i*2}}</p>
                 </fill:description>
                 <fill:cta>
-                  <x-atoms.btn isPrimary link="https://www.google.fr" title="google">
-                    bouton
+                  <x-atoms.btn isPrimary link="https://www.google.fr" title="google" msoLabel="Découvrir">
+                    Découvrir
                   </x-atoms.btn>
                   <x-spacer height="1"></x-spacer>
                 </fill:cta>
@@ -115,4 +121,9 @@ preheader: Newsletter email template
       </tr>
     </each>
   </table>
+  <outlook>
+    </td>
+    </tr>
+    </table>
+  </outlook>
 </x-main>

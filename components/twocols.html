@@ -2,14 +2,20 @@
   module.exports = {
     hAlign: props.hAlign ? `text-${props.hAlign}` : "",
     vAlign: props.vAlign ? `align-${props.vAlign}` : "",
-    widthLeft: props.widthLeft || "",
-    widthRight: props.widthRight || "",
-    shouldStack: props.isResponsive !== false && props.isResponsive !== "false"
+    widthLeft: props.widthLeft || "w-1/2",
+    widthRight: props.widthRight || "w-1/2",
+    shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
+    msoWidthLeft: props.widthLeft === "w-1/2" ? "300" : props.msoWidthLeft,
+    msoWidthRight: props.widthRight === "w-1/2" ? "300" : props.msoWidthRight
   };
 </script>
 <if condition="shouldStack">
   <table class="w-full">
     <tr role="row">
+      <outlook>
+        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
+
+      </outlook>
       <th role="cell"
         class="{{widthLeft}} {{hAlign}} {{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
         <slot:leftColumn />
@@ -20,12 +26,19 @@
         <slot:rightColumn />
         <yield />
       </th>
+      <outlook>
+        </td>
+        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
+      </outlook>
     </tr>
   </table>
 </if>
 <else>
   <table class="w-full">
     <tr role="row">
+      <outlook>
+        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
+      </outlook>
       <th role="cell" class="{{widthLeft}} {{hAlign}} {{vAlign}} font-base dark:text-white">
         <slot:leftColumn />
         <yield />
@@ -34,6 +47,10 @@
         <slot:rightColumn />
         <yield />
       </th>
+      <outlook>
+        </td>
+        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
+      </outlook>
     </tr>
   </table>
 </else>

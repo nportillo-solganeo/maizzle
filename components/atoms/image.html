@@ -2,6 +2,8 @@
   module.exports = {
     imgSrc: props.imgSrc || '',
     alt: props.alt || '',
+    imgWidth: props.imgWidth || '',
+    imgHeight: props.imgHeight || '100%'
   }
 </script>
-<img src="{{ imgSrc }}" alt="{{ alt }}" />
+<img src="{{ imgSrc }}" alt="{{ alt }}" width="{{ imgWidth }}" height="{{ imgHeight }}" />

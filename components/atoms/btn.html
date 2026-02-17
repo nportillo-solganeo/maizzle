@@ -1,11 +1,11 @@
 <script props>
   module.exports = {
-    label: props.label || '#',
     link: props.link || '',
     linkTitle: props.linkTitle || '',
     msoStyles: props.msoStyles || '',
     isPrimary: props.isPrimary !== undefined ? 'isPrimary' : null,
-    classes: props.class || ''
+    classes: props.class || '',
+    msoLabel: props.label || ''
   }
 </script>
 <!--[if mso]>
@@ -14,7 +14,7 @@
     arcsize="12%" stroke="f" fillcolor="{{isPrimary ? '#4F46E5' : '#6B7280'}}">
     <w:anchorlock/>
     <center style="color:#fff; font-family:Arial; font-size:16px;">
-      {{label}}
+      {{msoLabel}}
     </center>
   </v:roundrect>
   <![endif]-->
