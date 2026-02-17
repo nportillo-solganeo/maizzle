@@ -3,3 +3,4 @@
 node_modules
 dist
 build_production
+.DS_Store
