@@ -24,53 +24,35 @@
 </script>
 <if condition="shouldStack">
 
-  <table class="w-full sm:w-full text-[0px]" width="100%" border="0" cellpadding="0" cellspacing="0"
-    role="presentation">
+  <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0" role="presentation">
     <tr>
 
-      <!-- MSO -->
-      <outlook>
-        <table role="presentation" width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-      </outlook>
-      <!-- /MSO -->
-
-
-      <th width="{{msoWidthLeft}}" valign="{{vAlign}}"
-        class="{{maxWidthLeft}} {{widthLeft}} {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white"
+      <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
+        class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white"
         style="font-size: 16px;">
         <slot:leftColumn />
         <yield />
       </th>
 
-
-
-      <th width="{{msoWidthRight}}" valign="{{vAlign}}"
-        class="{{maxWidthRight}} {{widthRight}} {{hAlign}} {{vAlignClass}} inline-block  sm:w-full sm:max-w-full font-normal font-base dark:text-white"
+      <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
+        class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white"
         style="font-size: 16px;">
         <slot:rightColumn />
         <yield />
       </th>
 
-
-      <!-- MSO -->
-      <outlook>
     </tr>
-  </table>
-  </outlook>
-  <!-- /MSO -->
-  </tr>
   </table>
 </if>
 <else>
   <table class="w-full">
     <tr>
-      <th width="{{msoWidthLeft}}" valign="{{vAlign}}"
+      <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
         class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
         <slot:leftColumn />
         <yield />
       </th>
-      <th width="{{msoWidthRight}}" valign="{{vAlign}}"
+      <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
         class="{{maxWidthRight}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
         <slot:rightColumn />
         <yield />

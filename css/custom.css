@@ -31,3 +31,10 @@ img {
   @apply brightness-90;
 }
 
+/* Gmail-specific: force full width on stacked columns */
+u + .body .gmailResponsiveCol {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
