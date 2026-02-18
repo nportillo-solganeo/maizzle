@@ -24,7 +24,8 @@
 </script>
 <if condition="shouldStack">
 
-  <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0" role="presentation">
+  <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0" role="presentation"
+    data-component="twocols-responsive">
     <tr>
 
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
@@ -45,7 +46,7 @@
   </table>
 </if>
 <else>
-  <table class="w-full">
+  <table class="w-full" data-component="twocols">
     <tr>
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
         class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
