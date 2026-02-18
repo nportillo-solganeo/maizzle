@@ -1,56 +1,80 @@
 <script props>
+  // safelist: max-w-[600px] max-w-[300px] max-w-[200px] max-w-[400px] max-w-[150px] max-w-[450px]
+  const widthMap = {
+    'w-full': '600',
+    'w-1/2': '300',
+    'w-1/3': '200',
+    'w-2/3': '400',
+    'w-1/4': '150',
+    'w-3/4': '450',
+  };
+
   module.exports = {
     hAlign: props.hAlign ? `text-${props.hAlign}` : "",
-    vAlign: props.vAlign ? `align-${props.vAlign}` : "",
-    widthLeft: props.widthLeft || "w-1/2",
-    widthRight: props.widthRight || "w-1/2",
+    vAlignClass: props.vAlign ? `align-${props.vAlign}` : "",
+    vAlign: props.vAlign || "top",
+    widthLeft: props.widthLeft || 'w-1/2',
+    widthRight: props.widthRight || 'w-1/2',
+    maxWidthLeft: () => `max-w-[${widthMap[props.widthLeft || 'w-1/2']}px]`,
+    maxWidthRight: () => `max-w-[${widthMap[props.widthRight || 'w-1/2']}px]`,
     shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
-    msoWidthLeft: props.widthLeft === "w-1/2" ? "300" : props.msoWidthLeft,
-    msoWidthRight: props.widthRight === "w-1/2" ? "300" : props.msoWidthRight
+    msoWidthLeft: widthMap[props.widthLeft] || "300",
+    msoWidthRight: widthMap[props.widthRight] || "300"
   };
 </script>
 <if condition="shouldStack">
-  <table class="w-full">
-    <tr role="row">
-      <outlook>
-        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
 
+  <table class="w-full sm:w-full text-[0px]" width="100%" border="0" cellpadding="0" cellspacing="0"
+    role="presentation">
+    <tr>
+
+      <!-- MSO -->
+      <outlook>
+        <table role="presentation" width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+          <tr>
       </outlook>
-      <th role="cell"
-        class="{{widthLeft}} {{hAlign}} {{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
+      <!-- /MSO -->
+
+
+      <th width="{{msoWidthLeft}}" valign="{{vAlign}}"
+        class="{{maxWidthLeft}} {{widthLeft}} {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white"
+        style="font-size: 16px;">
         <slot:leftColumn />
         <yield />
       </th>
-      <th role="cell"
-        class="{{widthRight}} {{hAlign}} {{vAlign}} inline-block sm:w-full sm:block font-normal font-base dark:text-white">
+
+
+
+      <th width="{{msoWidthRight}}" valign="{{vAlign}}"
+        class="{{maxWidthRight}} {{widthRight}} {{hAlign}} {{vAlignClass}} inline-block  sm:w-full sm:max-w-full font-normal font-base dark:text-white"
+        style="font-size: 16px;">
         <slot:rightColumn />
         <yield />
       </th>
+
+
+      <!-- MSO -->
       <outlook>
-        </td>
-        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
-      </outlook>
     </tr>
+  </table>
+  </outlook>
+  <!-- /MSO -->
+  </tr>
   </table>
 </if>
 <else>
   <table class="w-full">
-    <tr role="row">
-      <outlook>
-        <td width="{{msoWidthLeft}}" valign="{{vAlign}}">
-      </outlook>
-      <th role="cell" class="{{widthLeft}} {{hAlign}} {{vAlign}} font-base dark:text-white">
+    <tr>
+      <th width="{{msoWidthLeft}}" valign="{{vAlign}}"
+        class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
         <slot:leftColumn />
         <yield />
       </th>
-      <th role="cell" class="{{widthRight}} {{hAlign}} {{vAlign}} font-base  dark:text-white">
+      <th width="{{msoWidthRight}}" valign="{{vAlign}}"
+        class="{{maxWidthRight}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
         <slot:rightColumn />
         <yield />
       </th>
-      <outlook>
-        </td>
-        <td width="{{ msoWidthRight }}" valign="{{ vAlign }}">
-      </outlook>
     </tr>
   </table>
 </else>

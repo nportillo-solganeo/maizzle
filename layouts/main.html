@@ -1,7 +1,8 @@
 <!DOCTYPE {{{ page.doctype || 'html' }}}>
-
-<head lang="{{ page.language || 'en' }}" xmlns:v="urn:schemas-microsoft-com:vml"
+<html lang="{{ page.language || 'en' }}" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
 
   <meta charset="{{page.charset || 'utf-8'}}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,8 +37,7 @@
   <if condition="page.preheader">
     <div class="hidden">
       {{{ page.preheader }}}
-
-      in Array.from(Array(150))">&#8199;&#65279;&#847; </each>
+      <each loop="item in Array.from(Array(150))">&#8199;&#65279;&#847; </each>
     </div>
   </if>
 

@@ -1,0 +1,12 @@
+<script props>
+  module.exports = {
+    class: props.class || ''
+  }
+</script>
+<table>
+  <tr>
+    <td align="center" class="p-4 text-center text-sm text-slate-600 dark:text-slate-400 {{class}}">
+      <yield />
+    </td>
+  </tr>
+</table>
