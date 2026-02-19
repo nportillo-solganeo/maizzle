@@ -14,12 +14,10 @@ const OUTPUT_DIR = path.resolve(__dirname, '../build_production/emailSections');
 
 // --- FONCTION PRINCIPALE ---
 async function extractBlocks() {
-  console.log('🚀 Démarrage de l\'extraction pour Salesforce...');
 
   // 1. Vérification de l'existence du fichier source
   if (!fs.existsSync(INPUT_FILE)) {
-    console.error(`❌ Erreur : Fichier introuvable à : ${INPUT_FILE}`);
-    console.error(`👉 Avez-vous lancé 'maizzle build production' avant ?`);
+    console.error(`Erreur : fichier introuvable à : ${INPUT_FILE}`);
     process.exit(1);
   }
 
@@ -33,19 +31,28 @@ async function extractBlocks() {
     const htmlContent = fs.readFileSync(INPUT_FILE, 'utf8');
     const $ = cheerio.load(htmlContent);
 
-    // 4. Sélection des blocs marqués pour l'extraction
-    const blocks = $('[data-component]');
+    // 4. Sélection des blocs marqués pour l'extraction (1er de chaque type uniquement)
+    const allBlocks = $('[data-component]');
 
-    if (blocks.length === 0) {
-      console.warn("⚠️  Aucun élément avec l'attribut 'data-component' trouvé.");
+    if (allBlocks.length === 0) {
+      console.warn("Aucun élément avec l'attribut 'data-component' trouvé.");
       return;
     }
 
+    const seen = new Set();
+    const uniqueBlocks = [];
+    allBlocks.each((i, el) => {
+      const name = $(el).attr('data-component');
+      if (!seen.has(name)) {
+        seen.add(name);
+        uniqueBlocks.push(el);
+      }
+    });
+
     // 5. Extraction et écriture des fichiers
-    blocks.each((i, el) => {
-      // On récupère le nom souhaité (ex: "header", "hero")
+    uniqueBlocks.forEach((el) => {
       const blockName = $(el).attr('data-component');
-      
+
       // On retire l'attribut de marquage pour nettoyer le code final (optionnel mais propre)
       $(el).removeAttr('data-component');
 
@@ -55,11 +62,11 @@ async function extractBlocks() {
 
       const filePath = path.join(OUTPUT_DIR, `${blockName}.html`);
       fs.writeFileSync(filePath, extractedHtml);
-      
-      console.log(`✅ ${blockName}.html généré`);
+
+      console.log(`${blockName}.html généré`);
     });
 
-    console.log(`🎉 Terminé ! ${blocks.length} fichiers prêts dans ${OUTPUT_DIR}`);
+    console.log(`🎉 Terminé ! ${uniqueBlocks.length} fichiers prêts dans ${OUTPUT_DIR}`);
 
   } catch (error) {
     console.error("Une erreur s'est produite :", error);
@@ -68,4 +75,4 @@ async function extractBlocks() {
 }
 
 // Exécution
-extractBlocks();
+ extractBlocks();

@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "maizzle serve",
-    "build": "maizzle build production"
+    "build": "maizzle build production && node ./scripts/sectionExtractor.js"
   },
   "dependencies": {
     "@maizzle/framework": "latest",
