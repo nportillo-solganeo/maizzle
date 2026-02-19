@@ -46,7 +46,8 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
     <tr>
       <td align="center" class="p-0 bg-slate-400 dark:bg-slate-700">
 
-        <x-twocols isResponsive widthLeft="w-1/3" widthRight="w-2/3" hAlign="center" vAlign="middle" class="bg-none">
+        <x-twocols-div isResponsive="false" widthLeft="w-1/3" widthRight="w-2/3" hAlign="center" vAlign="middle"
+          class="bg-none">
           <fill:leftColumn>
 
             <x-atoms.image imgSrc="https://placehold.co/600x400/000000/FFFFFF.png" alt="Product"
@@ -68,7 +69,7 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
             </x-atoms.wrapper>
 
           </fill:rightColumn>
-        </x-twocols>
+        </x-twocols-div>
 
       </td>
     </tr>
@@ -81,9 +82,9 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
     </tr>
 
     <tr>
-      <td align="center" class="p-0">
+      <td align="center" class="p-0 text-0">
         <each loop="i in [1,2,3]">
-          <x-twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
+          <x-twocols-div isResponsive="false" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
             <fill:leftColumn>
 
 
@@ -100,7 +101,7 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
                   <p>Description du produit {{i*2-1}}</p>
                 </fill:description>
                 <fill:cta>
-                  <x-atoms.btn link="https://www.google.fr" title="google" msoLabel="Découvrir">
+                  <x-atoms.btn link="https://www.google.fr" title="google">
                     Découvrir
                   </x-atoms.btn>
                 </fill:cta>

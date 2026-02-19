@@ -21,7 +21,7 @@ img {
 }
 
 .btn {
-  @apply rounded-md py-4 px-6 cursor-pointer bg-blue-500 text-white no-underline
+  @apply rounded-md py-4 px-6 cursor-pointer bg-blue-500 text-white no-underline inline-block
 }
 
 .isPrimary {

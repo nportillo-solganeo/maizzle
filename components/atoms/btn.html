@@ -4,8 +4,7 @@
     linkTitle: props.linkTitle || '',
     msoStyles: props.msoStyles || '',
     isPrimary: props.isPrimary !== undefined ? 'isPrimary' : '',
-    classes: props.class || '',
-    msoLabel: props.label || ''
+    classes: props.class || ''
   }
 </script>
 <!--[if mso]>
@@ -14,12 +13,12 @@
     arcsize="12%" stroke="f" fillcolor="{{isPrimary ? '#4F46E5' : '#6B7280'}}">
     <w:anchorlock/>
     <center style="color:#ffffff; font-family:Arial; font-size:16px;">
-      {{msoLabel}}
+      <yield />
     </center>
   </v:roundrect>
   <![endif]-->
 <!--[if !mso]><!-->
-<a href="{{link}}" title="{{linkTitle}}" class="{{isPrimary}} {{classes}} btn ">
+<a href="{{link}}" title="{{linkTitle}}" class="{{isPrimary}} {{classes}} btn text-base">
   <yield />
 </a>
 <!--<![endif]-->
