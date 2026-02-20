@@ -3,11 +3,14 @@
   "type": "module",
   "scripts": {
     "dev": "maizzle serve",
-    "build": "maizzle build production && node ./scripts/sectionExtractor.js"
+    "build": "maizzle build production && node ./scripts/sectionExtractor.js",
+    "deploy": "node ./scripts/deploy-sfmc.js"
   },
   "dependencies": {
     "@maizzle/framework": "latest",
+    "axios": "^1.13.5",
     "cheerio": "^1.2.0",
+    "dotenv": "^17.3.1",
     "tailwindcss-preset-email": "latest"
   }
 }

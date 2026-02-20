@@ -7,43 +7,289 @@
       </picture>
     </a>
   </p>
-  <p>Quickly build HTML emails with Tailwind CSS</p>
-<div>
-
-  [![Version][npm-version-shield]][npm]
-  [![Build][github-ci-shield]][github-ci]
-  [![Downloads][npm-stats-shield]][npm-stats]
-  [![License][license-shield]][license]
-
-  </div>
+  <p>Build production-ready HTML emails with Tailwind CSS</p>
 </div>
+
+## Overview
+
+A Maizzle starter project for building HTML emails with:
+
+- **Tailwind CSS** with email-safe utility preset
+- **Component-based architecture** with reusable layouts and atoms
+- **Outlook/MSO compatibility** via VML and conditional comments
+- **Dark mode** support across all templates
+- **Responsive design** with Gmail-compatible column stacking
+- **Automated deployment** to Salesforce Marketing Cloud (SFMC)
 
 ## Getting Started
 
-Run this command and follow the prompts:
+```bash
+npm install
+npm run dev
+```
+
+Opens a dev server at `http://localhost:3000` with live reload.
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Development server with live reload |
+| `npm run build` | Production build + section extraction |
+| `node scripts/deploy-sfmc.js` | Deploy extracted sections to SFMC |
+| `node scripts/deploy-sfmc.js --dry-run` | Simulate SFMC deployment |
+
+## Directory Structure
+
+```
+emails/          - Email templates (newsletter, transactional)
+layouts/         - Master HTML wrappers
+components/      - Reusable components
+  atoms/         - Atomic UI elements (button, card, image, title)
+scripts/         - Build automation and deployment
+css/             - Global email styles
+images/          - Static assets
+build_production/ - Production build output (gitignored)
+  emailSections/ - Extracted component HTML blocks
+```
+
+## Email Templates
+
+### Newsletter (`emails/newsletter.html`)
+Multi-product promotional newsletter featuring:
+- Header with logo (light/dark mode)
+- Featured product in 2-column layout
+- Product grid using `<each>` loop
+- Footer with dynamic year
+
+### Transactional (`emails/transactional.html`)
+Account verification email featuring:
+- Logo with build-time image path replacement
+- CTA button with Outlook VML support
+- Fallback URL for manual verification
+- Dynamic copyright year
+
+## Component Library
+
+### Layout Components
+
+| Component | Tag | Description |
+|---|---|---|
+| Header | `<x-header>` | Logo + title with dark mode support |
+| Footer | `<x-footer>` | Centered table-based footer |
+| Spacer | `<x-spacer>` | Vertical spacing with MSO override |
+| Divider | `<x-divider>` | Horizontal rule with custom height/color |
+| Two Columns | `<x-twocols-div>` | Responsive 2-column layout with Gmail stacking |
+| VML Fill | `<x-v-fill>` | Outlook background image support via VML |
+
+### Atom Components
+
+| Component | Tag | Description |
+|---|---|---|
+| Button | `<x-atoms.button>` | Primary CTA with Outlook VML |
+| Btn | `<x-atoms.btn>` | Legacy button with `v:roundrect` |
+| Card | `<x-atoms.card>` | Content card with image/title/description/CTA slots |
+| Image | `<x-atoms.image>` | Image element with alt and dimension props |
+| Title | `<x-atoms.title>` | Heading (h1–h6) with preset Tailwind styles |
+| Wrapper | `<x-atoms.wrapper>` | Table wrapper for flexible content |
+
+### Component Usage
+
+```html
+<!-- Button with custom color -->
+<x-atoms.button href="https://example.com" bg-color="#4338ca">
+  Click me
+</x-atoms.button>
+
+<!-- Two-column layout with named slots -->
+<x-twocols-div widthLeft="w-1/2" widthRight="w-1/2">
+  <fill:leftColumn>Left content</fill:leftColumn>
+  <fill:rightColumn>Right content</fill:rightColumn>
+</x-twocols-div>
+
+<!-- Card with all slots -->
+<x-atoms.card>
+  <fill:image><x-atoms.image imgSrc="image.jpg" alt="Product" /></fill:image>
+  <fill:title>Product Name</fill:title>
+  <fill:description>Short description</fill:description>
+  <fill:cta><x-atoms.btn link="https://example.com">Shop</x-atoms.btn></fill:cta>
+</x-atoms.card>
+```
+
+### Email Template Anatomy
+
+```html
+---
+bodyClass: bg-slate-50
+preheader: Preview text shown in email clients
+title: My Email
+---
+
+<x-main>
+  <x-header logoSrc="images/logo.png" mainTitle="Newsletter" />
+  <x-spacer height="24px" />
+
+  <!-- Content here -->
+
+  <x-footer />
+</x-main>
+```
+
+### Component Props System
+
+Components declare props and computed values via `<script props>`:
+
+```html
+<script props>
+  module.exports = {
+    href: props.href,
+    bg: props['bg-color'] || '#4338ca',
+    styles: `display:inline-block; background:${bg};`,
+  };
+</script>
+
+<a href="{{{ href }}}" style="{{ styles }}">
+  <yield />
+</a>
+```
+
+- `{{{ }}}` — unescaped output (for URLs, HTML)
+- `{{ }}` — escaped output (for text)
+- `<yield />` — renders component children
+- `<slot:name>` / `<fill:name>` — named content slots
+
+## Build Workflow
+
+```
+npm run build
+  ├─ maizzle build production
+  │   ├─ Compiles all emails/ with layouts and components
+  │   ├─ Inlines all CSS into style="" attributes
+  │   ├─ Maps CSS properties to HTML attributes (width, bgcolor, align…)
+  │   ├─ Converts longhand CSS to shorthand
+  │   └─ Outputs: build_production/newsletter.html, transactional.html
+  │
+  └─ node scripts/sectionExtractor.js
+      ├─ Parses build_production/newsletter.html
+      ├─ Finds all [data-component] elements
+      ├─ Extracts one unique instance per component
+      └─ Outputs: build_production/emailSections/{component}.html
+```
+
+Mark components for extraction by adding `data-component`:
+
+```html
+<div data-component="header">
+  <!-- header content -->
+</div>
+```
+
+## SFMC Deployment
+
+Deploys extracted `emailSections/` as HTML blocks to Salesforce Marketing Cloud.
+
+### Setup
+
+Create a `.env` file:
+
+```env
+SFMC_SUBDOMAIN=your-subdomain
+SFMC_CLIENT_ID=your-client-id
+SFMC_CLIENT_SECRET=your-client-secret
+SFMC_ACCOUNT_ID=your-account-id
+SFMC_CATEGORY_ID=optional-category-id
+```
+
+### Deploy
 
 ```bash
-npx create-maizzle
+# Deploy all sections
+node scripts/deploy-sfmc.js
+
+# Preview without uploading
+node scripts/deploy-sfmc.js --dry-run
 ```
+
+**Features:**
+- OAuth 2.0 with automatic token refresh (18-min cache)
+- Upsert logic: creates new assets or updates existing ones
+- Concurrent batches of 5 uploads for speed
+- Retry logic: up to 3 attempts with exponential backoff
+
+## Configuration
+
+### `config.js` — Development
+
+```js
+export default {
+  build: {
+    content: ['emails/**/*.html'],
+    static: {
+      source: ['images/**/*.*'],
+      destination: 'images',
+    },
+  },
+}
+```
+
+### `config.production.js` — Production
+
+```js
+export default {
+  build: { output: { path: 'build_production' } },
+  css: {
+    inline: {
+      styleToAttribute: {
+        width: 'width',
+        height: 'height',
+        'background-color': 'bgcolor',
+        'text-align': 'align',
+        'vertical-align': 'valign',
+      },
+    },
+    shorthand: true,
+  },
+  minify: {
+    html: { lineLengthLimit: 500, removeIndentations: true },
+  },
+  prettify: true,
+}
+```
+
+### `tailwind.config.js`
+
+```js
+module.exports = {
+  presets: [require('tailwindcss-preset-email')],
+  content: ['./components/**/*.html', './emails/**/*.html', './layouts/**/*.html'],
+  theme: {
+    extend: {
+      fontFamily: {
+        base: ['Verdana', 'Helvetica', 'sans-serif'],
+      },
+    },
+  },
+}
+```
+
+## Email Client Compatibility
+
+| Feature | Implementation |
+|---|---|
+| Outlook layout | `<outlook>` / `<not-outlook>` conditional tags |
+| Outlook backgrounds | VML `<v:rect>` / `<v:fill>` via `<x-v-fill>` |
+| Outlook buttons | VML `v:roundrect` with `mso-text-raise` |
+| Gmail responsive | `u + .body .gmailResponsiveCol` CSS selector |
+| Dark mode | `dark:` Tailwind variants + `color-scheme: light dark` |
+| Mobile responsive | `sm:` breakpoint prefix (mobile-first) |
+| Image paths | `src-production=""` attribute for build-time replacement |
+| Font fallback | Verdana → Helvetica → sans-serif stack |
 
 ## Documentation
 
-Maizzle documentation is available at https://maizzle.com
-
-## Issues
-
-Please open all issues in the [framework repository](https://github.com/maizzle/framework).
+- [Maizzle Documentation](https://maizzle.com)
+- [Tailwind CSS Email Preset](https://github.com/maizzle/tailwindcss-preset-email)
 
 ## License
 
-The Maizzle framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-[npm]: https://www.npmjs.com/package/@maizzle/framework
-[npm-stats]: https://npm-stat.com/charts.html?package=%40maizzle%2Fframework&from=2019-03-27
-[npm-version-shield]: https://img.shields.io/npm/v/@maizzle/framework.svg
-[npm-stats-shield]: https://img.shields.io/npm/dt/@maizzle/framework.svg?color=6875f5
-[github-ci]: https://github.com/maizzle/framework/actions
-[github-ci-shield]: https://github.com/maizzle/framework/actions/workflows/nodejs.yml/badge.svg
-[license]: ./LICENSE
-[license-shield]: https://img.shields.io/npm/l/@maizzle/framework.svg?color=0e9f6e
-# maizzle
+MIT
