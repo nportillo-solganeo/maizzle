@@ -6,5 +6,4 @@ build_production
 .DS_Store
 .copilot/*
 .env
-.claude/*
 CLAUDE.md

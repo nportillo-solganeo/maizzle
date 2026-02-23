@@ -19,7 +19,7 @@ if (missingVars.length > 0) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DIST_DIR = path.resolve(__dirname, '../build_production/emailSections');
-const TEMPLATE_DIR = path.resolve(__dirname, '../build_production/template');
+const TEMPLATE_DIR = path.resolve(__dirname, '../build_production/emailTemplates');
 
 // --- Configuration API SFMC ---
 const AUTH_URL = `https://${process.env.SFMC_SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`;
@@ -112,7 +112,7 @@ async function uploadAsset(filePath, existingMap, categoryId = null, retryCount 
     const existingAsset = existingMap.get(assetName); // Récupère l'objet {id, typeId}
     
     // LOGIQUE DE DÉTECTION DE CONFLIT DE TYPE
-    // Si l'asset existe MAIS que son type est différent de ce qu'on veut envoyer
+    // Si l'asset existe mais que son type est différent de ce qu'on veut envoyer
     // (Ex: C'est un ID 197 dans SFMC, mais on veut envoyer un ID 207)
     if (existingAsset && existingAsset.typeId !== assetType.id) {
         console.warn(`⚠️ Conflit de type pour ${assetName} (Actuel: ${existingAsset.typeId} vs Nouveau: ${assetType.id})`);
@@ -123,12 +123,12 @@ async function uploadAsset(filePath, existingMap, categoryId = null, retryCount 
             { headers: { Authorization: `Bearer ${token}` } }
         );
         
-        // On le retire de la map pour forcer le passage dans le bloc "else" (Création)
+        // On le retire de la map pour forcer le passage dans le bloc else
         existingMap.delete(assetName);
     }
 
     // Ré-évaluation après suppression potentielle
-    // Note: existingMap.get(assetName) renverra undefined si on vient de supprimer
+    // existingMap.get(assetName) renverra undefined si on vient de supprimer
     const currentAsset = existingMap.get(assetName); 
 
     if (currentAsset) {
