@@ -32,7 +32,7 @@ async function extractBlocksFromFile(inputFile) {
       return;
     }
 
-    const seen = new Set();
+    const seen = new Set(); //collection sans doublons
     const uniqueBlocks = [];
     allBlocks.each((i, el) => {
       const name = $(el).attr('data-component');
