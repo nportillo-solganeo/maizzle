@@ -32,12 +32,12 @@ Opens a dev server at `http://localhost:3000` with live reload.
 
 ## Commands
 
-| Command                                 | Description                           |
-| --------------------------------------- | ------------------------------------- |
-| `npm run dev`                           | Development server with live reload   |
-| `npm run build`                         | Production build + section extraction |
-| `npm run deploy`                        | Deploy extracted sections to SFMC     |
-| `node scripts/deploy-sfmc.js --dry-run` | Simulate SFMC deployment              |
+| Command               | Description                           |
+| --------------------- | ------------------------------------- |
+| `npm run dev`         | Development server with live reload   |
+| `npm run build`       | Production build + section extraction |
+| `npm run deploy`      | Deploy extracted sections to SFMC     |
+| `npm run deploy:test` | Simulate SFMC deployment              |
 
 ## Directory Structure
 
@@ -222,7 +222,7 @@ SFMC_TEMPLATE_CATEGORY_ID=optional-folder-id-for-templates
 npm run deploy
 
 # Preview without uploading
-node scripts/deploy-sfmc.js --dry-run
+npm run deploy:test
 ```
 
 **Features:**
