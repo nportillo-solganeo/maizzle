@@ -26,7 +26,7 @@ const AUTH_URL = `https://${process.env.SFMC_SUBDOMAIN}.auth.marketingcloudapis.
 const REST_URL = `https://${process.env.SFMC_SUBDOMAIN}.rest.marketingcloudapis.com`;
 
 // --- Options de déploiement ---
-const DRY_RUN = process.argv.includes('--dry-run');
+const TEST_MODE = process.argv.includes('--test-mode');
 const MAX_CONCURRENT = 5;
 const MAX_RETRIES = 3;
 const TOKEN_LIFETIME_MS = 18 * 60 * 1000;
@@ -92,9 +92,9 @@ async function uploadAsset(filePath, existingMap, categoryId = null, retryCount 
     const fileName = path.basename(filePath, '.html');
     const assetName = `[Maizzle] ${fileName}`;
 
-    if (DRY_RUN) {
+    if (TEST_MODE) {
         const action = existingMap.has(assetName) ? 'Mettrait à jour' : 'Créerait';
-        console.log(`🔍 [Dry-run] ${action} [${assetType.name}] : ${assetName}`);
+        console.log(`🔍 [Test-mode] ${action} [${assetType.name}] : ${assetName}`);
         return;
     }
 
@@ -111,9 +111,8 @@ async function uploadAsset(filePath, existingMap, categoryId = null, retryCount 
     try {
     const existingAsset = existingMap.get(assetName); // Récupère l'objet {id, typeId}
     
-    // LOGIQUE DE DÉTECTION DE CONFLIT DE TYPE
     // Si l'asset existe mais que son type est différent de ce qu'on veut envoyer
-    // (Ex: C'est un ID 197 dans SFMC, mais on veut envoyer un ID 207)
+    // ex: C'est un ID 197 dans SFMC, mais on veut envoyer un ID 207
     if (existingAsset && existingAsset.typeId !== assetType.id) {
         console.warn(`⚠️ Conflit de type pour ${assetName} (Actuel: ${existingAsset.typeId} vs Nouveau: ${assetType.id})`);
         console.warn(`🗑️ Suppression de l'ancien asset pour recréation propre...`);
@@ -187,7 +186,7 @@ function chunkArray(arr, size) {
 }
 
 async function deploy() {
-    if (DRY_RUN) console.log('🔍 Mode dry-run activé — aucune modification ne sera effectuée.\n');
+    if (TEST_MODE) console.log('🔍 Mode test activé — aucune modification ne sera effectuée.\n');
 
     console.log('🚀 Démarrage du déploiement vers Salesforce Marketing Cloud...');
 
@@ -205,7 +204,7 @@ async function deploy() {
 
     let existingMap = new Map();
 
-    if (!DRY_RUN) {
+    if (!TEST_MODE) {
         const token = await getAuthToken();
         console.log('🔑 Authentification réussie.');
         console.log('🔎 Chargement des assets existants...');

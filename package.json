@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "maizzle serve",
     "build": "maizzle build production && node ./scripts/sectionExtractor.js",
-    "deploy": "node ./scripts/deploy-sfmc.js"
+    "deploy": "node ./scripts/deploy-sfmc.js",
+    "deploy:test": "node ./scripts/deploy-sfmc.js --test-mode"
   },
   "dependencies": {
     "@maizzle/framework": "latest",
