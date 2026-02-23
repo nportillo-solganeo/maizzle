@@ -32,12 +32,12 @@ Opens a dev server at `http://localhost:3000` with live reload.
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Development server with live reload |
-| `npm run build` | Production build + section extraction |
-| `npm run deploy` | Deploy extracted sections to SFMC |
-| `node scripts/deploy-sfmc.js --dry-run` | Simulate SFMC deployment |
+| Command                                 | Description                           |
+| --------------------------------------- | ------------------------------------- |
+| `npm run dev`                           | Development server with live reload   |
+| `npm run build`                         | Production build + section extraction |
+| `npm run deploy`                        | Deploy extracted sections to SFMC     |
+| `node scripts/deploy-sfmc.js --dry-run` | Simulate SFMC deployment              |
 
 ## Directory Structure
 
@@ -51,20 +51,24 @@ scripts/         - Build automation and deployment
 images/          - Static assets
 build_production/ - Production build output (gitignored)
   emailSections/ - Extracted component HTML blocks
-  template/      - Full templates with empty slots (for SFMC)
+  emailTemplates/      - Full templates with empty slots (for SFMC)
 ```
 
 ## Email Templates
 
 ### Newsletter (`emails/newsletter-template.html`)
+
 Multi-product promotional newsletter featuring:
+
 - Header with logo (light/dark mode)
 - Featured product in 2-column layout
 - Product grid using `<each>` loop
 - Footer with copyright
 
 ### Transactional (`emails/transactional.html`)
+
 Account verification email featuring:
+
 - Logo with build-time image path replacement
 - CTA button with Outlook VML support
 - Fallback URL for manual verification
@@ -74,27 +78,27 @@ Account verification email featuring:
 
 ### Layout Components
 
-| Component | Tag | Description |
-|---|---|---|
-| Header | `<x-header>` | Logo + title with dark mode support |
-| Footer | `<x-footer>` | Centered table-based footer |
-| Logo | `<x-logo>` | Standalone logo with light/dark variants |
-| Spacer | `<x-spacer>` | Vertical spacing with MSO override |
-| Divider | `<x-divider>` | Horizontal rule with custom height/color |
-| Two Columns (table) | `<x-twocols>` | Table-based 2-column layout |
-| Two Columns (div) | `<x-twocols-div>` | Div-based 2-column layout with Outlook VML fallback |
-| VML Fill | `<x-v-fill>` | Outlook background image support via VML |
+| Component           | Tag               | Description                                         |
+| ------------------- | ----------------- | --------------------------------------------------- |
+| Header              | `<x-header>`      | Logo + title with dark mode support                 |
+| Footer              | `<x-footer>`      | Centered table-based footer                         |
+| Logo                | `<x-logo>`        | Standalone logo with light/dark variants            |
+| Spacer              | `<x-spacer>`      | Vertical spacing with MSO override                  |
+| Divider             | `<x-divider>`     | Horizontal rule with custom height/color            |
+| Two Columns (table) | `<x-twocols>`     | Table-based 2-column layout                         |
+| Two Columns (div)   | `<x-twocols-div>` | Div-based 2-column layout with Outlook VML fallback |
+| VML Fill            | `<x-v-fill>`      | Outlook background image support via VML            |
 
 ### Atom Components
 
-| Component | Tag | Description |
-|---|---|---|
-| Button | `<x-atoms.button>` | Primary CTA with Outlook VML |
-| Btn | `<x-atoms.btn>` | Legacy button with `v:roundrect` |
-| Card | `<x-atoms.card>` | Content card with image/title/description/CTA slots |
-| Image | `<x-atoms.image>` | Image element with alt and dimension props |
-| Title | `<x-atoms.title>` | Heading (h1–h6) with preset Tailwind styles |
-| Wrapper | `<x-atoms.wrapper>` | Table wrapper for flexible content |
+| Component | Tag                 | Description                                         |
+| --------- | ------------------- | --------------------------------------------------- |
+| Button    | `<x-atoms.button>`  | Primary CTA with Outlook VML                        |
+| Btn       | `<x-atoms.btn>`     | Legacy button with `v:roundrect`                    |
+| Card      | `<x-atoms.card>`    | Content card with image/title/description/CTA slots |
+| Image     | `<x-atoms.image>`   | Image element with alt and dimension props          |
+| Title     | `<x-atoms.title>`   | Heading (h1–h6) with preset Tailwind styles         |
+| Wrapper   | `<x-atoms.wrapper>` | Table wrapper for flexible content                  |
 
 ### Component Usage
 
@@ -115,7 +119,9 @@ Account verification email featuring:
   <fill:image><x-atoms.image imgSrc="image.jpg" alt="Product" /></fill:image>
   <fill:title>Product Name</fill:title>
   <fill:description>Short description</fill:description>
-  <fill:cta><x-atoms.btn link="https://example.com">Shop</x-atoms.btn></fill:cta>
+  <fill:cta
+    ><x-atoms.btn link="https://example.com">Shop</x-atoms.btn></fill:cta
+  >
 </x-atoms.card>
 ```
 
@@ -146,7 +152,7 @@ Components declare props and computed values via `<script props>`:
 <script props>
   module.exports = {
     href: props.href,
-    bg: props['bg-color'] || '#4338ca',
+    bg: props["bg-color"] || "#4338ca",
     styles: `display:inline-block; background:${bg};`,
   };
 </script>
@@ -177,7 +183,7 @@ npm run build
       ├─ Finds all [data-component] elements (one unique instance per name)
       ├─ Outputs blocks → build_production/emailSections/{component}.html
       └─ Empties [data-type="slot"] areas and outputs full template
-          → build_production/template/{filename}.html
+          → build_production/emailTemplates/{filename}.html
 ```
 
 Mark components for extraction by adding `data-component`:
@@ -194,7 +200,7 @@ Mark components for extraction by adding `data-component`:
 
 ## SFMC Deployment
 
-Deploys extracted `emailSections/` as HTML blocks and `template/` as templates to Salesforce Marketing Cloud.
+Deploys extracted `emailSections/` as HTML blocks and `emailTemplates/` as templates to Salesforce Marketing Cloud.
 
 ### Setup
 
@@ -220,6 +226,7 @@ node scripts/deploy-sfmc.js --dry-run
 ```
 
 **Features:**
+
 - OAuth 2.0 with automatic token refresh (18-min cache)
 - Upsert logic: creates new assets or updates existing ones by name
 - Asset type conflict detection: deletes and recreates on type mismatch
@@ -235,67 +242,75 @@ node scripts/deploy-sfmc.js --dry-run
 ```js
 export default {
   build: {
-    content: ['emails/**/*.html'],
+    content: ["emails/**/*.html"],
     static: {
-      source: ['images/**/*.*'],
-      destination: 'images',
+      source: ["images/**/*.*"],
+      destination: "images",
     },
   },
-}
+};
 ```
 
 ### `config.production.js` — Production
 
 ```js
 export default {
-  build: { output: { path: 'build_production' } },
+  build: { output: { path: "build_production" } },
   css: {
     inline: {
       styleToAttribute: {
-        width: 'width',
-        height: 'height',
-        'background-color': 'bgcolor',
-        'text-align': 'align',
-        'vertical-align': 'valign',
+        width: "width",
+        height: "height",
+        "background-color": "bgcolor",
+        "text-align": "align",
+        "vertical-align": "valign",
       },
     },
     shorthand: true,
   },
   minify: {
-    html: { lineLengthLimit: 500, removeIndentations: true, breakToTheLeftOf: [] },
+    html: {
+      lineLengthLimit: 500,
+      removeIndentations: true,
+      breakToTheLeftOf: [],
+    },
   },
   prettify: true,
-}
+};
 ```
 
 ### `tailwind.config.js`
 
 ```js
 module.exports = {
-  presets: [require('tailwindcss-preset-email')],
-  content: ['./components/**/*.html', './emails/**/*.html', './layouts/**/*.html'],
+  presets: [require("tailwindcss-preset-email")],
+  content: [
+    "./components/**/*.html",
+    "./emails/**/*.html",
+    "./layouts/**/*.html",
+  ],
   theme: {
     extend: {
       fontFamily: {
-        base: ['Verdana', 'Helvetica', 'sans-serif'],
+        base: ["Verdana", "Helvetica", "sans-serif"],
       },
     },
   },
-}
+};
 ```
 
 ## Email Client Compatibility
 
-| Feature | Implementation |
-|---|---|
-| Outlook layout | `<outlook>` / `<not-outlook>` conditional tags |
-| Outlook backgrounds | VML `<v:rect>` / `<v:fill>` via `<x-v-fill>` |
-| Outlook buttons | VML `v:roundrect` with `mso-text-raise` |
-| Gmail responsive | `u + .body .gmailResponsiveCol` CSS selector |
-| Dark mode | `dark:` Tailwind variants + `color-scheme: light dark` |
-| Mobile responsive | `sm:` breakpoint prefix (mobile-first) |
-| Image paths | `src-production=""` attribute for build-time replacement |
-| Font fallback | Verdana → Helvetica → sans-serif stack |
+| Feature             | Implementation                                           |
+| ------------------- | -------------------------------------------------------- |
+| Outlook layout      | `<outlook>` / `<not-outlook>` conditional tags           |
+| Outlook backgrounds | VML `<v:rect>` / `<v:fill>` via `<x-v-fill>`             |
+| Outlook buttons     | VML `v:roundrect` with `mso-text-raise`                  |
+| Gmail responsive    | `u + .body .gmailResponsiveCol` CSS selector             |
+| Dark mode           | `dark:` Tailwind variants + `color-scheme: light dark`   |
+| Mobile responsive   | `sm:` breakpoint prefix (mobile-first)                   |
+| Image paths         | `src-production=""` attribute for build-time replacement |
+| Font fallback       | Verdana → Helvetica → sans-serif stack                   |
 
 ## Documentation
 
