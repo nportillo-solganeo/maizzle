@@ -244,7 +244,7 @@ async function deploy() {
             let tSucceeded = 0;
             let tFailed = 0;
 
-            const templateAssetType = { name: 'template', id: 207 }; // ID d'asset pour les templates (différent des blocks)
+            const templateAssetType = { name: 'template', id: 4 }; // ID 4 = template Content Builder (207 = templatebasedemail)
             for (const batch of templateBatches) {
                 const results = await Promise.allSettled(batch.map(fp => uploadAsset(fp, existingMap, templateCategoryId, 0, templateAssetType)));
                 tSucceeded += results.filter(r => r.status === 'fulfilled').length;

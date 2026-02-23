@@ -12,10 +12,6 @@ const BUILD_DIR = path.resolve(__dirname, '../build_production');
 const OUTPUT_DIR = path.resolve(__dirname, '../build_production/emailSections');
 const OUTPUT_TEMPLATE_DIR = path.resolve(__dirname, '../build_production/emailTemplates');
 
-// Dossiers à exclure du scan
-const EXCLUDED_DIRS = ['emailSections', 'emailTemplates'];
-
-
 async function extractBlocksFromFile(inputFile) {
   const fileName = path.basename(inputFile);
 
