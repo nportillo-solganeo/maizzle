@@ -6,3 +6,5 @@ dist
 .copilot/*
 .env
 CLAUDE.md
+.claude/
+.github/
