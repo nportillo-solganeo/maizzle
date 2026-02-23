@@ -58,34 +58,34 @@ async function getAuthToken() {
 
 // Récupère tous les assets [Maizzle] existants et retourne un Map name -> id
 async function fetchExistingAssets(token) {
-    const existingMap = new Map();
-    let page = 1;
+    const PAGE_SIZE = 200;
+    const params = (page) => ({
+        '$filter': "name like '[Maizzle]%'",
+        '$page': page,
+        '$pageSize': PAGE_SIZE,
+        '$fields': 'name,id,assetType'
+    });
+    const headers = { Authorization: `Bearer ${token}` };
+    const url = `${REST_URL}/asset/v1/content/assets`;
 
-    while (true) {
-        const response = await axios.get(`${REST_URL}/asset/v1/content/assets`, {
-            headers: { Authorization: `Bearer ${token}` },
-            params: {
-                '$filter': "name like '[Maizzle]%'",
-                '$page': page,
-                '$pageSize': 50,
-                // On s'assure de récupérer le type
-                '$fields': 'name,id,assetType' 
-            }
-        });
+    // 1ère requête pour connaître le total
+    const { data } = await axios.get(url, { headers, params: params(1) });
+    const firstItems = data.items ?? [];
+    const totalPages = Math.ceil((data.count ?? firstItems.length) / PAGE_SIZE);
 
-        const items = response.data.items ?? [];
-        for (const item of items) {
-            // STOCKAGE AMÉLIORÉ : On garde l'ID et le Type ID
-            existingMap.set(item.name, { 
-                id: item.id, 
-                typeId: item.assetType?.id 
-            });
-        }
+    // Pages restantes en parallèle
+    const remaining = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, i) =>
+            axios.get(url, { headers, params: params(i + 2) })
+        )
+    );
 
-        if (items.length < 50) break;
-        page++;
-    }
-    return existingMap;
+    const allItems = [...firstItems, ...remaining.flatMap(r => r.data.items ?? [])];
+
+    return new Map(allItems.map(item => [
+        item.name,
+        { id: item.id, typeId: item.assetType?.id }
+    ]));
 }
 
 async function uploadAsset(filePath, existingMap, categoryId = null, retryCount = 0, assetType = { name: 'htmlblock', id: 197 }) {
@@ -245,7 +245,7 @@ async function deploy() {
             let tSucceeded = 0;
             let tFailed = 0;
 
-            const templateAssetType = { name: 'template', id: 207 };
+            const templateAssetType = { name: 'template', id: 207 }; // ID d'asset pour les templates (différent des blocks)
             for (const batch of templateBatches) {
                 const results = await Promise.allSettled(batch.map(fp => uploadAsset(fp, existingMap, templateCategoryId, 0, templateAssetType)));
                 tSucceeded += results.filter(r => r.status === 'fulfilled').length;
