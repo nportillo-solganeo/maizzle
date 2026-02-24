@@ -35,13 +35,13 @@
     <tr>
 
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
-        class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white text-base">
+        class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
         <slot:leftColumn />
         <yield />
       </th>
 
       <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
-        class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white text-base">
+        class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
         <slot:rightColumn />
         <yield />
       </th>
@@ -53,12 +53,12 @@
   <table class="w-full" data-component="twocols">
     <tr>
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
-        class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
+        class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">
         <slot:leftColumn />
         <yield />
       </th>
       <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
-        class="{{maxWidthRight}} {{hAlign}} {{vAlignClass}} font-base dark:text-white">
+        class="{{maxWidthRight}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">
         <slot:rightColumn />
         <yield />
       </th>

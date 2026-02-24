@@ -9,10 +9,10 @@ module.exports = {
     './layouts/**/*.html',
   ],
   theme: {
-		extend: {
-			fontFamily: {
-				base: ["Verdana", "Helvetica", "sans-serif"],
-			},
-		},
-	},
+    extend: {
+      fontFamily: {
+        base: ["Verdana", "Helvetica", "sans-serif"],
+      },
+    },
+  },
 }

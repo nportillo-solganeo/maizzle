@@ -17,23 +17,22 @@ export default {
     },
   },
   css: {
-		inline: {
-			styleToAttribute: {
-				width: "width",
-				height: "height",
-				"background-color": "bgcolor",
-				"text-align": "align",
-				"vertical-align": "valign",
-			},
-		},
-		shorthand: true,
-	},
-	minify: {
-		html: {
-			lineLengthLimit: 500,
-			removeIndentations: true,
-			breakToTheLeftOf: [],
-		},
-	},
-  prettify: true,
+    inline: {
+      styleToAttribute: {
+        width: "width",
+        height: "height",
+        "background-color": "bgcolor",
+        "text-align": "align",
+        "vertical-align": "valign",
+      },
+    },
+    shorthand: true,
+  },
+  minify: {
+    html: {
+      lineLengthLimit: 500,
+      removeIndentations: true,
+      breakToTheLeftOf: [],
+    },
+  },
 }
