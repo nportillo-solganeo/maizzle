@@ -3,23 +3,28 @@
     link: props.link || '',
     linkTitle: props.linkTitle || '',
     msoStyles: props.msoStyles || '',
+    msoLabel: props.msoLabel || '',
     isPrimary: props.isPrimary !== undefined ? 'isPrimary' : '',
+    vmlColor: props.isPrimary !== undefined ? '#DC2626' : '#3B82F6',
     classes: props.class || ''
   }
 </script>
 <div data-component="btn">
   <outlook>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{link}}"
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{{ link }}}"
       style="height:52px; v-text-anchor:middle; width:200px; {{msoStyles}}" arcsize="12%" stroke="f"
-      fillcolor="{{isPrimary ? '#4F46E5' : '#6B7280'}}">
+      fillcolor="{{ vmlColor }}">
       <w:anchorlock />
       <center style="color:#ffffff; font-family:Arial; font-size:16px;">
-        <yield />
+        <if condition="msoLabel">{{ msoLabel }}</if>
+        <else>
+          <yield />
+        </else>
       </center>
     </v:roundrect>
   </outlook>
   <not-outlook>
-    <a href="{{link}}" title="{{linkTitle}}" class="{{isPrimary}} {{classes}} btn text-base">
+    <a href="{{{ link }}}" title="{{linkTitle}}" class="{{isPrimary}} {{classes}} btn text-base">
       <yield />
     </a>
   </not-outlook>

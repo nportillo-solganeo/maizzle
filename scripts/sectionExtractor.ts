@@ -43,6 +43,12 @@ async function extractBlocksFromFile(inputFile: string): Promise<void> {
     uniqueBlocks.forEach((el) => {
       const blockName = $(el).attr("data-component") as string;
 
+      //check if blockName is valid (only letters, numbers, underscores and -)
+      if (!/^[\w-]+$/.test(blockName)) {
+        console.warn(`❌ [${fileName}] Invalid block name: ${blockName}`);
+        return;
+      }
+
       $(el).removeAttr("data-component");
 
       const extractedHtml = $.html(el);

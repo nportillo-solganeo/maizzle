@@ -110,18 +110,43 @@ async function fetchExistingAssets(
   const headers = { Authorization: `Bearer ${token}` };
   const url = `${REST_URL}/asset/v1/content/assets`;
 
-  const { data } = await axios.get<SfmcAssetsResponse>(url, {
-    headers,
-    params: params(1),
-  });
+  let data: SfmcAssetsResponse;
+  try {
+    ({ data } = await axios.get<SfmcAssetsResponse>(url, {
+      headers,
+      params: params(1),
+    }));
+  } catch (error: unknown) {
+    const status = axios.isAxiosError(error) ? error.response?.status : null;
+    const message = axios.isAxiosError(error)
+      ? (error.response?.data?.message ?? error.message)
+      : String(error);
+    console.error(
+      `❌ Failed to fetch existing assets${status ? ` (HTTP ${status})` : ""}: ${message}`,
+    );
+    process.exit(1);
+  }
+
   const firstItems = data.items ?? [];
   const totalPages = Math.ceil((data.count ?? firstItems.length) / PAGE_SIZE);
 
-  const remaining = await Promise.all(
-    Array.from({ length: totalPages - 1 }, (_, i) =>
-      axios.get<SfmcAssetsResponse>(url, { headers, params: params(i + 2) }),
-    ),
-  );
+  let remaining: Awaited<ReturnType<typeof axios.get<SfmcAssetsResponse>>>[];
+  try {
+    remaining = await Promise.all(
+      Array.from({ length: totalPages - 1 }, (_, i) =>
+        axios.get<SfmcAssetsResponse>(url, { headers, params: params(i + 2) }),
+      ),
+    );
+  } catch (error: unknown) {
+    const status = axios.isAxiosError(error) ? error.response?.status : null;
+    const message = axios.isAxiosError(error)
+      ? (error.response?.data?.message ?? error.message)
+      : String(error);
+    console.error(
+      `❌ Failed to fetch asset pages${status ? ` (HTTP ${status})` : ""}: ${message}`,
+    );
+    process.exit(1);
+  }
 
   const allItems = [
     ...firstItems,
@@ -226,7 +251,13 @@ async function uploadAsset(
           { headers: { Authorization: `Bearer ${token}` } },
         );
         existingMap.delete(assetName);
-        return uploadAsset(filePath, existingMap, categoryId, 0, assetType);
+        return uploadAsset(
+          filePath,
+          existingMap,
+          categoryId,
+          retryCount + 1,
+          assetType,
+        );
       }
     }
 
@@ -306,12 +337,29 @@ async function deploy(): Promise<void> {
   let succeeded = 0;
   let failed = 0;
 
-  const sectionCategoryId = process.env.SFMC_COMPONENTS_CATEGORY_ID
-    ? Number(process.env.SFMC_COMPONENTS_CATEGORY_ID)
-    : null;
-  const templateCategoryId = process.env.SFMC_TEMPLATE_CATEGORY_ID
-    ? Number(process.env.SFMC_TEMPLATE_CATEGORY_ID)
-    : null;
+  const parseCategoryId = (
+    val: string | undefined,
+    name: string,
+  ): number | null => {
+    if (!val) return null;
+    const n = Number(val);
+    if (!Number.isInteger(n) || n <= 0) {
+      console.error(
+        `❌ Invalid ${name}: "${val}" is not a valid positive integer.`,
+      );
+      process.exit(1);
+    }
+    return n;
+  };
+
+  const sectionCategoryId = parseCategoryId(
+    process.env.SFMC_COMPONENTS_CATEGORY_ID,
+    "SFMC_COMPONENTS_CATEGORY_ID",
+  );
+  const templateCategoryId = parseCategoryId(
+    process.env.SFMC_TEMPLATE_CATEGORY_ID,
+    "SFMC_TEMPLATE_CATEGORY_ID",
+  );
 
   for (const batch of batches) {
     const results = await Promise.allSettled(
