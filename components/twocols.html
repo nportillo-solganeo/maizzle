@@ -29,28 +29,29 @@
   };
 </script>
 <if condition="shouldStack">
+  <div data-component="twocols-th" data-component-variant="{{widthLeft}}--{{widthRight}}">
+    <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0"
+      role="presentation" data-component="twocols-responsive">
+      <tr>
 
-  <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0" role="presentation"
-    data-component="twocols-responsive">
-    <tr>
+        <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
+          class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
+          <slot:leftColumn />
+          <yield />
+        </th>
 
-      <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
-        class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
-        <slot:leftColumn />
-        <yield />
-      </th>
+        <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
+          class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
+          <slot:rightColumn />
+          <yield />
+        </th>
 
-      <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
-        class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
-        <slot:rightColumn />
-        <yield />
-      </th>
-
-    </tr>
-  </table>
+      </tr>
+    </table>
+  </div>
 </if>
 <else>
-  <table class="w-full" data-component="twocols">
+  <table class="w-full" data-component="twocols-th" data-component-variant="{{widthLeft}}--{{widthRight}}">
     <tr>
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
         class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">

@@ -29,7 +29,7 @@
   };
 </script>
 <if condition="shouldStack">
-  <div data-component="twocols">
+  <div data-component="twocols-div" data-component-variant="{{widthLeft}}--{{widthRight}}">
     <outlook>
       <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
         <tr>
@@ -70,7 +70,7 @@
   </div>
 </if>
 <else>
-  <table class="w-full" data-component="twocols">
+  <table class="w-full" data-component="twocols-div" data-component-variant="{{widthLeft}}--{{widthRight}}">
     <tr>
       <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
         class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">

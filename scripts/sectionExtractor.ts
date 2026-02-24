@@ -30,33 +30,43 @@ async function extractBlocksFromFile(inputFile: string): Promise<void> {
       return;
     }
 
-    const seen = new Set<string>();
+    const extractedKeys = new Set<string>();
     const uniqueBlocks: Element[] = [];
     allBlocks.each((i, el) => {
-      const name = $(el).attr("data-component");
-      if (name && !seen.has(name)) {
-        seen.add(name);
+      const componentName = $(el).attr("data-component");
+      const componentVariant = $(el).attr("data-component-variant") || "";
+      const key = componentVariant
+        ? `${componentName}--${componentVariant}`
+        : componentName;
+      if (componentName && key && !extractedKeys.has(key)) {
+        extractedKeys.add(key);
         uniqueBlocks.push(el);
       }
     });
 
     uniqueBlocks.forEach((el) => {
       const blockName = $(el).attr("data-component") as string;
+      const variant: string | undefined = $(el).attr("data-component-variant");
+      const sanitizedVariant = variant ? variant.replace(/\//g, "-") : null;
+      const outputName = sanitizedVariant
+        ? `${blockName}--${sanitizedVariant}`
+        : blockName;
 
-      //check if blockName is valid (only letters, numbers, underscores and -)
-      if (!/^[\w-]+$/.test(blockName)) {
-        console.warn(`❌ [${fileName}] Invalid block name: ${blockName}`);
+      // Validate outputName to prevent invalid file names
+      if (!/^[\w-]+$/.test(outputName)) {
+        console.warn(`❌ [${fileName}] Invalid block name: ${outputName}`);
         return;
       }
 
       $(el).removeAttr("data-component");
+      $(el).removeAttr("data-component-variant");
 
       const extractedHtml = $.html(el);
 
-      const filePath = path.join(OUTPUT_DIR, `${blockName}.html`);
+      const filePath = path.join(OUTPUT_DIR, `${outputName}.html`);
       fs.writeFileSync(filePath, extractedHtml);
 
-      console.log(`✅ [${fileName}] ${blockName}.html generated`);
+      console.log(`✅ [${fileName}] ${outputName}.html generated`);
     });
 
     console.log(
