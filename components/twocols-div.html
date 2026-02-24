@@ -15,8 +15,14 @@
     vAlign: props.vAlign || "top",
     widthLeft: props.widthLeft || 'w-1/2',
     widthRight: props.widthRight || 'w-1/2',
-    maxWidthLeft: () => `max-w-[${widthMap[props.widthLeft || 'w-1/2']}px]`,
-    maxWidthRight: () => `max-w-[${widthMap[props.widthRight || 'w-1/2']}px]`,
+    maxWidthLeft: () => {
+      const widthValue = widthMap[props.widthLeft] ?? widthMap['w-1/2'];
+      return `max-w-[${widthValue}px]`;
+    },
+    maxWidthRight: () => {
+      const widthValue = widthMap[props.widthRight] ?? widthMap['w-1/2'];
+      return `max-w-[${widthValue}px]`;
+    },
     shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
     msoWidthLeft: widthMap[props.widthLeft] || "300",
     msoWidthRight: widthMap[props.widthRight] || "300"
