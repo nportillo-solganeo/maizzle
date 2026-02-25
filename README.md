@@ -95,7 +95,7 @@ Account verification email featuring:
 | --------- | ------------------- | --------------------------------------------------- |
 | Button    | `<x-atoms.button>`  | Primary CTA with Outlook VML                        |
 | Btn       | `<x-atoms.btn>`     | Legacy button with `v:roundrect`                    |
-| Card      | `<x-atoms.card>`    | Content card with image/title/description/CTA slots |
+| Card      | `<x-card>`          | Content card with image/title/description/CTA slots |
 | Image     | `<x-atoms.image>`   | Image element with alt and dimension props          |
 | Title     | `<x-atoms.title>`   | Heading (h1–h6) with preset Tailwind styles         |
 | Wrapper   | `<x-atoms.wrapper>` | Table wrapper for flexible content                  |
@@ -115,14 +115,14 @@ Account verification email featuring:
 </x-twocols-div>
 
 <!-- Card with all slots -->
-<x-atoms.card>
+<x-card>
   <fill:image><x-atoms.image imgSrc="image.jpg" alt="Product" /></fill:image>
   <fill:title>Product Name</fill:title>
   <fill:description>Short description</fill:description>
   <fill:cta
     ><x-atoms.btn link="https://example.com">Shop</x-atoms.btn></fill:cta
   >
-</x-atoms.card>
+</x-card>
 ```
 
 ### Email Template Anatomy
