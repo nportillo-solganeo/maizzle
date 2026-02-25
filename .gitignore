@@ -8,3 +8,5 @@ dist
 CLAUDE.md
 .claude/
 .github/
+source/
+build_production/
