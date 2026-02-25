@@ -10,7 +10,7 @@
 
   module.exports = {
     tag: () => {
-      const validTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+      const validTags = Object.keys(titleType)
       return validTags.includes(props.tag) ? props.tag : 'h1'
     },
     classes: () => {
