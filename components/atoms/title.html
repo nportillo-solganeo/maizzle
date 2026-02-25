@@ -9,8 +9,14 @@
   }
 
   module.exports = {
-    tag: props.tag || 'h1',
-    classes: titleType[props.tag] || titleType['h1']
+    tag: () => {
+      const valideTag = titleType[props.tag] ?? 'h1'
+      return valideTag
+    },
+    classes: () => {
+      const baseClasses = titleType[props.tag] ?? titleType.h1
+      return `${baseClasses} ${props.class || ''}`
+    }
   }
 </script>
 
