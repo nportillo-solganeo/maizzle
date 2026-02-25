@@ -1,7 +1,6 @@
 <script props>
   // safelist: max-w-[600px] max-w-[300px] max-w-[200px] max-w-[400px] max-w-[150px] max-w-[450px]
   const widthMap = {
-    'w-full': '600',
     'w-1/2': '300',
     'w-1/3': '200',
     'w-2/3': '400',
@@ -9,57 +8,60 @@
     'w-3/4': '450',
   };
 
+  const validWidths = Object.keys(widthMap);
+  const widthLeftKey = validWidths.includes(props.widthLeft) ? props.widthLeft : 'w-1/2';
+  const widthRightKey = validWidths.includes(props.widthRight) ? props.widthRight : 'w-1/2';
+
   module.exports = {
-    hAlign: props.hAlign ? `text-${props.hAlign}` : "",
-    vAlignClass: props.vAlign ? `align-${props.vAlign}` : "",
-    vAlign: props.vAlign || "top",
-    widthLeft: props.widthLeft || 'w-1/2',
-    widthRight: props.widthRight || 'w-1/2',
-    maxWidthLeft: () => {
-      const widthValue = widthMap[props.widthLeft] ?? widthMap['w-1/2'];
-      return `max-w-[${widthValue}px]`;
-    },
-    maxWidthRight: () => {
-      const widthValue = widthMap[props.widthRight] ?? widthMap['w-1/2'];
-      return `max-w-[${widthValue}px]`;
-    },
+    hAlign: ['left', 'center', 'right', 'justify'].includes(props.hAlign) ? props.hAlign : "left",
+    vAlign: ['top', 'middle', 'bottom'].includes(props.vAlign) ? props.vAlign : "top",
+    widthLeft: widthMap[widthLeftKey],
+    widthRight: widthMap[widthRightKey],
+    variant: `${widthLeftKey}--${widthRightKey}`,
     shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
-    msoWidthLeft: widthMap[props.widthLeft] || "300",
-    msoWidthRight: widthMap[props.widthRight] || "300"
   };
 </script>
 <if condition="shouldStack">
-  <div data-component="twocols-th" data-component-variant="{{widthLeft}}--{{widthRight}}">
-    <table class="w-full sm:w-full text-[0px]" width="600" border="0" cellpadding="0" cellspacing="0"
-      role="presentation" data-component="twocols-responsive">
-      <tr>
+  <div data-component="twocols-div" data-component-variant="{{variant}}" class="text-0">
+    <outlook>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+        <tr>
+          <td align="{{hAlign}}" valign="{{vAlign}}" width="{{widthLeft}}" class="text-0">
+    </outlook>
+    <div
+      class="gmailResponsiveCol {{`max-w-[${widthLeft}px]`}} w-full {{`text-${hAlign}`}} {{`align-${vAlign}`}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
+      <slot:leftColumn />
+      <yield />
+    </div>
 
-        <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
-          class="gmailResponsiveCol {{maxWidthLeft}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
-          <slot:leftColumn />
-          <yield />
-        </th>
+    <outlook>
+      </td>
+      <td align="{{hAlign}}" valign="{{vAlign}}" width="{{widthRight}}" class="text-0">
+    </outlook>
 
-        <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
-          class="gmailResponsiveCol {{maxWidthRight}} w-full {{hAlign}} {{vAlignClass}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
-          <slot:rightColumn />
-          <yield />
-        </th>
+    <div
+      class="gmailResponsiveCol {{`max-w-[${widthRight}px]`}} w-full {{`text-${hAlign}`}} {{`align-${vAlign}`}} inline-block sm:w-full sm:max-w-full font-normal font-base dark:text-white ogsc:text-white text-base">
+      <slot:rightColumn />
+      <yield />
+    </div>
 
+    <outlook>
+      </td>
       </tr>
-    </table>
+      </table>
+    </outlook>
   </div>
 </if>
 <else>
-  <table class="w-full" data-component="twocols-th" data-component-variant="{{widthLeft}}--{{widthRight}}">
+  <table class="w-full" data-component="twocols-div" data-component-variant="{{variant}}">
     <tr>
-      <th width="{{msoWidthLeft}}" valign="{{vAlign}}" align="center"
-        class="{{maxWidthLeft}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">
+      <th width="{{widthLeft}}" valign="{{vAlign}}" align="{{hAlign}}"
+        class="{{`max-w-[${widthLeft}px]`}} {{`text-${hAlign}`}} {{`align-${vAlign}`}} font-base dark:text-white ogsc:text-white">
         <slot:leftColumn />
         <yield />
       </th>
-      <th width="{{msoWidthRight}}" valign="{{vAlign}}" align="center"
-        class="{{maxWidthRight}} {{hAlign}} {{vAlignClass}} font-base dark:text-white ogsc:text-white">
+      <th width="{{widthRight}}" valign="{{vAlign}}" align="{{hAlign}}"
+        class="{{`max-w-[${widthRight}px]`}} {{`text-${hAlign}`}} {{`align-${vAlign}`}} font-base dark:text-white ogsc:text-white">
         <slot:rightColumn />
         <yield />
       </th>
