@@ -109,10 +109,10 @@ Account verification email featuring:
 </x-atoms.button>
 
 <!-- Two-column layout with named slots -->
-<x-twocols-div widthLeft="w-1/2" widthRight="w-1/2">
+<x-atoms.twocols widthLeft="w-1/2" widthRight="w-1/2">
   <fill:leftColumn>Left content</fill:leftColumn>
   <fill:rightColumn>Right content</fill:rightColumn>
-</x-twocols-div>
+</x-atoms.twocols>
 
 <!-- Card with all slots -->
 <x-card>

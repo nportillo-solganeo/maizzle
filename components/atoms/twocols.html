@@ -17,12 +17,12 @@
     vAlign: ['top', 'middle', 'bottom'].includes(props.vAlign) ? props.vAlign : "top",
     widthLeft: widthMap[widthLeftKey],
     widthRight: widthMap[widthRightKey],
-    variant: `${widthLeftKey}--${widthRightKey}`,
+    variantLabel: `${widthLeftKey}--${widthRightKey}`,
     shouldStack: props.isResponsive !== false && props.isResponsive !== "false",
   };
 </script>
 <if condition="shouldStack">
-  <div data-component="twocols-div" data-component-variant="{{variant}}" class="text-0">
+  <div data-component="twocols" data-component-variant="{{variantLabel}}" class="text-0" data-testid="twocols">
     <outlook>
       <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
         <tr>
@@ -53,7 +53,7 @@
   </div>
 </if>
 <else>
-  <table class="w-full" data-component="twocols-div" data-component-variant="{{variant}}">
+  <table class="w-full" data-component="twocols" data-component-variant="{{variantLabel}}" data-testid="twocols">
     <tr>
       <th width="{{widthLeft}}" valign="{{vAlign}}" align="{{hAlign}}"
         class="{{`max-w-[${widthLeft}px]`}} {{`text-${hAlign}`}} {{`align-${vAlign}`}} font-base dark:text-white ogsc:text-white">

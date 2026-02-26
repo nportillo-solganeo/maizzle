@@ -17,8 +17,8 @@
 </script>
 
 <if condition="height">
-  <div class="text-base" role="separator" style="{{ styles }}">&zwj;</div>
+  <div class="text-base" role="separator" style="{{ styles }}" data-testid="spacer">&zwj;</div>
 </if>
 <else>
-  <div role="separator">&zwj;</div>
+  <div role="separator" data-testid="spacer">&zwj;</div>
 </else>
