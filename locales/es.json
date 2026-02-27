@@ -7,7 +7,7 @@
       "mainTitle": "Título del Encabezado del Boletín"
     },
     "intro": {
-      "body": "Lorem Ipsum es simplemente texto ficticio utilizado en la composición y maquetación antes de la impresión. Lorem Ipsum es el texto ficticio estándar de la industria de la imprenta desde los años 1500, cuando un impresor anónimo reunió fragmentos de texto para crear un libro de muestras de tipos de letra.",
+      "body": "Hola %%FirstName%%, lorem Ipsum es simplemente texto ficticio utilizado en la composición y maquetación antes de la impresión. Lorem Ipsum es el texto ficticio estándar de la industria de la imprenta desde los años 1500, cuando un impresor anónimo reunió fragmentos de texto para crear un libro de muestras de tipos de letra.",
       "cta": {
         "label": "Etiqueta",
         "linkTitle": "Sitio web de Google",
