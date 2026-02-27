@@ -60,10 +60,10 @@ bun run build en
 ## Directory Structure
 
 ```
-emails/          - Email templates (newsletter-template, transactional)
+emails/          - Email templates (newsletter-template)
 layouts/         - Master HTML wrappers
 components/      - Reusable components
-  atoms/         - Atomic UI elements (button, btn, card, image, title, wrapper)
+  atoms/         - Atomic UI elements (btn, image, title, twocols, wrapper)
 css/             - Global email styles (custom.css)
 scripts/         - Build automation and deployment
 images/          - Static assets
@@ -79,55 +79,53 @@ build_production/ - Production build output (gitignored)
 Multi-product promotional newsletter featuring:
 
 - Header with logo (light/dark mode)
-- Featured product in 2-column layout
-- Product grid using `<each>` loop
+- Intro section with CTA button
+- Featured product in 2-column layout via `<x-product_2cols-img--left>`
+- Product grid using `<each>` loop with `<x-atoms.twocols>` and `<x-card>`
 - Footer with copyright
-
-### Transactional (`emails/transactional.html`)
-
-Account verification email featuring:
-
-- Logo with build-time image path replacement
-- CTA button with Outlook VML support
-- Fallback URL for manual verification
-- Dynamic copyright year
 
 ## Component Library
 
 ### Layout Components
 
-| Component           | Tag               | Description                                         |
-| ------------------- | ----------------- | --------------------------------------------------- |
-| Header              | `<x-header>`      | Logo + title with dark mode support                 |
-| Footer              | `<x-footer>`      | Centered table-based footer                         |
-| Logo                | `<x-logo>`        | Standalone logo with light/dark variants            |
-| Spacer              | `<x-spacer>`      | Vertical spacing with MSO override                  |
-| Divider             | `<x-divider>`     | Horizontal rule with custom height/color            |
-| Two Columns (table) | `<x-twocols>`     | Table-based 2-column layout                         |
-| Two Columns (div)   | `<x-twocols-div>` | Div-based 2-column layout with Outlook VML fallback |
-| VML Fill            | `<x-v-fill>`      | Outlook background image support via VML            |
+| Component              | Tag                            | Description                                                                    |
+| ---------------------- | ------------------------------ | ------------------------------------------------------------------------------ |
+| Header                 | `<x-header>`                   | Logo + title with dark mode support                                            |
+| Footer                 | `<x-footer>`                   | Centered table-based footer wrapper (use `<yield />` content)                  |
+| Logo                   | `<x-logo>`                     | Standalone logo with light/dark variants                                       |
+| Spacer                 | `<x-spacer>`                   | Vertical spacing with MSO override                                             |
+| Divider                | `<x-divider>`                  | Horizontal rule with custom height, color, and margin props                    |
+| Button                 | `<x-button>`                   | Primary CTA button with alignment, color props, and Outlook VML padding        |
+| Card                   | `<x-card>`                     | Content card with image/title/description/CTA slots                            |
+| Product 2-Col (img left) | `<x-product_2cols-img--left>` | 2-column product section: image on left, product title/description/CTA on right |
+| VML Fill               | `<x-v-fill>`                   | Outlook background image support via VML                                       |
 
 ### Atom Components
 
-| Component | Tag                 | Description                                         |
-| --------- | ------------------- | --------------------------------------------------- |
-| Button    | `<x-atoms.button>`  | Primary CTA with Outlook VML                        |
-| Btn       | `<x-atoms.btn>`     | Legacy button with `v:roundrect`                    |
-| Card      | `<x-card>`          | Content card with image/title/description/CTA slots |
-| Image     | `<x-atoms.image>`   | Image element with alt and dimension props          |
-| Title     | `<x-atoms.title>`   | Heading (h1–h6) with preset Tailwind styles         |
-| Wrapper   | `<x-atoms.wrapper>` | Table wrapper for flexible content                  |
+| Component   | Tag                  | Description                                                        |
+| ----------- | -------------------- | ------------------------------------------------------------------ |
+| Two Columns | `<x-atoms.twocols>`  | 2-column layout; responsive div-based or table-based via `isResponsive` prop |
+| Btn         | `<x-atoms.btn>`      | VML `v:roundrect` button; `isPrimary` toggles fill color           |
+| Image       | `<x-atoms.image>`    | Image element with alt and dimension props                         |
+| Title       | `<x-atoms.title>`    | Heading (h1–h6) with preset Tailwind styles                        |
+| Wrapper     | `<x-atoms.wrapper>`  | Table wrapper for flexible content                                 |
 
 ### Component Usage
 
 ```html
-<!-- Button with custom color -->
-<x-atoms.button href="https://example.com" bg-color="#4338ca">
+<!-- Button with custom color and alignment -->
+<x-button href="https://example.com" bg-color="#4338ca" align="center">
   Click me
-</x-atoms.button>
+</x-button>
 
-<!-- Two-column layout with named slots -->
-<x-atoms.twocols widthLeft="w-1/2" widthRight="w-1/2">
+<!-- Two-column responsive layout with named slots -->
+<x-atoms.twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2">
+  <fill:leftColumn>Left content</fill:leftColumn>
+  <fill:rightColumn>Right content</fill:rightColumn>
+</x-atoms.twocols>
+
+<!-- Two-column non-responsive (table-based) layout -->
+<x-atoms.twocols isResponsive="false" widthLeft="w-1/3" widthRight="w-2/3">
   <fill:leftColumn>Left content</fill:leftColumn>
   <fill:rightColumn>Right content</fill:rightColumn>
 </x-atoms.twocols>
@@ -141,6 +139,13 @@ Account verification email featuring:
     ><x-atoms.btn link="https://example.com">Shop</x-atoms.btn></fill:cta
   >
 </x-card>
+
+<!-- Product 2-column section (image left) -->
+<x-product_2cols-img--left
+  productTitle="My Product"
+  productDescription="Product description"
+  productCta="Learn more"
+/>
 ```
 
 ### Email Template Anatomy
