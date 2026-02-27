@@ -24,20 +24,38 @@ A Maizzle starter project for building HTML emails with:
 ## Getting Started
 
 ```bash
-npm install
-npm run dev
+bun install
+bun dev
 ```
 
 Opens a dev server at `http://localhost:3000` with live reload.
 
 ## Commands
 
-| Command               | Description                           |
-| --------------------- | ------------------------------------- |
-| `npm run dev`         | Development server with live reload   |
-| `npm run build`       | Production build + section extraction |
-| `npm run deploy`      | Deploy extracted sections to SFMC     |
-| `npm run deploy:test` | Simulate SFMC deployment              |
+| Command                  | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `bun run dev [locale]`   | Development server with live reload                |
+| `bun run build <locale>` | Production build + section extraction for a locale |
+| `bun run deploy`         | Deploy extracted sections to SFMC                  |
+| `bun run deploy:test`    | Simulate SFMC deployment                           |
+| `bun run typecheck`      | TypeScript type check                              |
+| `bun test`               | Run all tests                                      |
+| `bun run test:unit`      | Run component unit tests                           |
+
+### Locale
+
+Locales are defined in `.env` via `SUPPORTED_LOCALES` (comma-separated, e.g. `fr,en,es`).
+
+- `dev` defaults to the first supported locale if none is specified
+- `build` requires a locale argument
+
+```bash
+# Dev server with a specific locale
+bun dev en
+
+# Production build for a specific locale
+bun run build en
+```
 
 ## Directory Structure
 
@@ -170,7 +188,7 @@ Components declare props and computed values via `<script props>`:
 ## Build Workflow
 
 ```
-npm run build
+bun run build
   ├─ maizzle build production
   │   ├─ Compiles all emails/ with layouts and components
   │   ├─ Inlines all CSS into style="" attributes
@@ -219,10 +237,10 @@ SFMC_TEMPLATE_CATEGORY_ID=optional-folder-id-for-templates
 
 ```bash
 # Deploy all sections and templates
-npm run deploy
+bun run deploy
 
 # Preview without uploading
-npm run deploy:test
+bun run deploy:test
 ```
 
 **Features:**
