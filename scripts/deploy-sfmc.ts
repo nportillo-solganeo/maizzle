@@ -38,11 +38,9 @@ interface SfmcAssetsResponse {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DIST_DIR = path.resolve(__dirname, "../build_production/emailSections");
-const TEMPLATE_DIR = path.resolve(
-  __dirname,
-  "../build_production/emailTemplates",
-);
+const locale = process.env.LOCALE || 'fr'
+const DIST_DIR = path.resolve(__dirname, `../build_production/${locale}/emailSections`);
+const TEMPLATE_DIR = path.resolve(__dirname, `../build_production/${locale}/emailTemplates`);
 
 const AUTH_URL = `https://${process.env.SFMC_SUBDOMAIN}.auth.marketingcloudapis.com/v2/token`;
 const REST_URL = `https://${process.env.SFMC_SUBDOMAIN}.rest.marketingcloudapis.com`;

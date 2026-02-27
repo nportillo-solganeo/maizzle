@@ -1,0 +1,35 @@
+{
+  "newsletter": {
+    "preheader": "Plantilla de correo de boletín",
+    "title": "Newsletter Solganeo",
+    "header": {
+      "logoLink": "https://www.solganeo.com",
+      "mainTitle": "Título del Encabezado del Boletín"
+    },
+    "intro": {
+      "body": "Lorem Ipsum es simplemente texto ficticio utilizado en la composición y maquetación antes de la impresión. Lorem Ipsum es el texto ficticio estándar de la industria de la imprenta desde los años 1500, cuando un impresor anónimo reunió fragmentos de texto para crear un libro de muestras de tipos de letra.",
+      "cta": {
+        "label": "Etiqueta",
+        "linkTitle": "Sitio web de Google",
+        "href": "https://google.com"
+      }
+    },
+    "featured": {
+      "sectionTitle": "Producto Destacado",
+      "product": {
+        "title": "Producto 1",
+        "description": "Descripción del producto",
+        "cta": "Aprende Más"
+      }
+    },
+    "products": {
+      "sectionTitle": "Últimos productos agregados",
+      "cta": "Descubrir",
+      "productTitle": "Producto",
+      "productDescription": "Descripción del producto"
+    },
+    "footer": {
+      "copyright": "© 2024 Solganeo. Todos los derechos reservados."
+    }
+  }
+}

@@ -7,12 +7,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BUILD_DIR = path.resolve(__dirname, "../build_production");
-const OUTPUT_DIR = path.resolve(__dirname, "../build_production/emailSections");
-const OUTPUT_TEMPLATE_DIR = path.resolve(
-  __dirname,
-  "../build_production/emailTemplates",
-);
+const locale = process.env.LOCALE || 'fr'
+const BUILD_DIR = path.resolve(__dirname, `../build_production/${locale}`);
+const OUTPUT_DIR = path.resolve(__dirname, `../build_production/${locale}/emailSections`);
+const OUTPUT_TEMPLATE_DIR = path.resolve(__dirname, `../build_production/${locale}/emailTemplates`);
 
 async function extractBlocksFromFile(inputFile: string): Promise<void> {
   const fileName = path.basename(inputFile);

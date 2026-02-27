@@ -2,7 +2,6 @@
 preheader: Newsletter email template
 title: Newsletter Solganeo
 bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-base
-language: fr
 ---
 
 
@@ -18,18 +17,18 @@ language: fr
     align="center" role="presentation">
     <tr>
       <td class="text-center" data-type="slot" data-key="newsletter-header-unlocked">
-        <x-header logoLink="https://www.solganeo.com" mainTitle="Newsletter Header Title" logoSrc="solganeo-logo.png"
+        <x-header logoLink="{{page.contents.newsletter.header.logoLink}}"
+          mainTitle="{{page.contents.newsletter.header.mainTitle}}" logoSrc="solganeo-logo.png"
           logoSrcDark="solganeo-logo.png">
         </x-header>
       </td>
     </tr>
     <tr>
       <td align="center" class="p-6" data-type="slot" data-key="newsletter-intro-unlocked">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore magnam commodi culpa minima dicta, natus
-          asperiores? Tempora voluptas magni, nam eaque dignissimos harum. Impedit deleniti error doloribus, sequi in
-          vel.</p>
-        <x-atoms.btn link="https://google.com" linkTitle="Google website"
-          classes="bg-purple-500 py-4 px-6 text-white m-auto inline-block rounded-md no-underline">Label</x-atoms.btn>
+        <p>{{page.contents.newsletter.intro.body}}</p>
+        <x-atoms.btn link="{{page.contents.newsletter.intro.cta.href}}"
+          linkTitle="{{page.contents.newsletter.intro.cta.linkTitle}}"
+          classes="bg-purple-500 py-4 px-6 text-white m-auto inline-block rounded-md no-underline">{{page.contents.newsletter.intro.cta.label}}</x-atoms.btn>
       </td>
     </tr>
 
@@ -42,9 +41,12 @@ language: fr
     <tr>
       <td align="center" class="p-0 bg-slate-400 dark:bg-slate-700" data-type="slot"
         data-key="newsletter-featured-unlocked">
-        <x-atoms.title tag="h2" class="text-left px-4">Produit en vedette</x-atoms.title>
+        <x-atoms.title tag="h2" class="text-left px-4">{{page.contents.newsletter.featured.sectionTitle}}</x-atoms.title>
 
-        <x-product_2cols-img--left></x-product_2cols-img--left>
+        <x-product_2cols-img--left productTitle="{{page.contents.newsletter.featured.product.title}}"
+          productDescription="{{page.contents.newsletter.featured.product.description}}"
+          productCta="{{page.contents.newsletter.featured.product.cta}}">
+        </x-product_2cols-img--left>
       </td>
     </tr>
 
@@ -56,7 +58,7 @@ language: fr
 
     <tr>
       <td align="center" class="p-0" data-type="slot" data-key="newsletter-products-unlocked">
-        <x-atoms.title tag="h2" class="text-left px-4">Derniers produits ajoutés</x-atoms.title>
+        <x-atoms.title tag="h2" class="text-left px-4">{{page.contents.newsletter.products.sectionTitle}}</x-atoms.title>
 
         <each loop="i in [1,2,3]">
           <x-atoms.twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
@@ -70,14 +72,14 @@ language: fr
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">Produit {{i*2-1}}</x-atoms.title>
+                  <x-atoms.title tag="h3">{{page.contents.newsletter.products.productTitle}} {{i*2-1}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
-                  <p>Description du produit {{i*2-1}}</p>
+                  <p>{{page.contents.newsletter.products.productDescription}} {{i*2-1}}</p>
                 </fill:description>
                 <fill:cta>
                   <x-atoms.btn link="https://www.google.fr" title="google">
-                    Découvrir
+                    {{page.contents.newsletter.products.cta}}
                   </x-atoms.btn>
                 </fill:cta>
                 <x-spacer height="4px"></x-spacer>
@@ -92,14 +94,15 @@ language: fr
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">Produit {{i*2}}</x-atoms.title>
+                  <x-atoms.title tag="h3">{{page.contents.newsletter.products.productTitle}} {{i*2}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
-                  <p>Description du produit {{i*2}}</p>
+                  <p>{{page.contents.newsletter.products.productDescription}} {{i*2}}</p>
                 </fill:description>
                 <fill:cta>
-                  <x-atoms.btn isPrimary link="https://www.google.fr" title="google" msoLabel="Découvrir">
-                    Découvrir
+                  <x-atoms.btn isPrimary link="https://www.google.fr" title="google"
+                    msoLabel="{{page.contents.newsletter.products.cta}}">
+                    {{page.contents.newsletter.products.cta}}
                   </x-atoms.btn>
                   <x-spacer height="4px"></x-spacer>
                 </fill:cta>
@@ -113,7 +116,7 @@ language: fr
     <tr>
       <td align="center" data-type="slot" data-key="newsletter-footer-unlocked">
         <x-footer>
-          <p class="text-center text-sm text-slate-600 dark:text-slate-400">© 2024 Solganeo. All rights reserved.</p>
+          <p class="text-center text-sm text-slate-600 dark:text-slate-400">{{page.contents.newsletter.footer.copyright}}</p>
         </x-footer>
       </td>
     </tr>

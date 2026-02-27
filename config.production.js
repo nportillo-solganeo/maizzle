@@ -9,11 +9,13 @@
 |
 */
 
+const locale = process.env.LOCALE || 'fr'
+
 /** @type {import('@maizzle/framework').Config} */
 export default {
   build: {
     output: {
-      path: 'build_production',
+      path: `build_production/${locale}`,
     },
   },
   css: {

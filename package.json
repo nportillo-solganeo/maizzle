@@ -2,8 +2,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "maizzle serve",
-    "build": "maizzle build production && bun ./scripts/sectionExtractor.ts",
+    "dev": "bun ./scripts/manageLocale.ts dev",
+    "build": "bun ./scripts/manageLocale.ts build",
     "deploy": "bun ./scripts/deploy-sfmc.ts",
     "deploy:test": "bun ./scripts/deploy-sfmc.ts --test-mode",
     "typecheck": "bunx tsc --noEmit",
