@@ -7,10 +7,35 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const locale = process.env.LOCALE || 'fr'
+const locale = process.env.LOCALE || "fr";
 const BUILD_DIR = path.resolve(__dirname, `../build_production/${locale}`);
-const OUTPUT_DIR = path.resolve(__dirname, `../build_production/${locale}/emailSections`);
-const OUTPUT_TEMPLATE_DIR = path.resolve(__dirname, `../build_production/${locale}/emailTemplates`);
+const OUTPUT_SECTIONS_DIR = path.resolve(
+  __dirname,
+  `../build_production/${locale}/emailSections`,
+);
+const OUTPUT_TEMPLATE_DIR = path.resolve(
+  __dirname,
+  `../build_production/${locale}/emailTemplates`,
+);
+
+interface BlockInfo {
+  componentName: string;
+  key: string;
+  outputName: string;
+}
+
+function getBlockInfo(el: Element): BlockInfo | null {
+  const componentName = el.attribs["data-component"];
+  if (!componentName) return null;
+
+  const variant = el.attribs["data-component-variant"];
+  const sanitizedVariant = variant ? variant.replace(/\//g, "-") : null;
+  const key = sanitizedVariant
+    ? `${componentName}--${sanitizedVariant}`
+    : componentName;
+
+  return { componentName, key, outputName: key };
+}
 
 async function extractBlocksFromFile(inputFile: string): Promise<void> {
   const fileName = path.basename(inputFile);
@@ -29,26 +54,17 @@ async function extractBlocksFromFile(inputFile: string): Promise<void> {
     }
 
     const extractedKeys = new Set<string>();
-    const uniqueBlocks: Element[] = [];
+    const uniqueBlocks: Array<{ el: Element; info: BlockInfo }> = [];
     allBlocks.each((i, el) => {
-      const componentName = $(el).attr("data-component");
-      const componentVariant = $(el).attr("data-component-variant") || "";
-      const key = componentVariant
-        ? `${componentName}--${componentVariant}`
-        : componentName;
-      if (componentName && key && !extractedKeys.has(key)) {
-        extractedKeys.add(key);
-        uniqueBlocks.push(el);
+      const info = getBlockInfo(el);
+      if (info && !extractedKeys.has(info.key)) {
+        extractedKeys.add(info.key);
+        uniqueBlocks.push({ el, info });
       }
     });
 
-    uniqueBlocks.forEach((el) => {
-      const blockName = $(el).attr("data-component") as string;
-      const variant: string | undefined = $(el).attr("data-component-variant");
-      const sanitizedVariant = variant ? variant.replace(/\//g, "-") : null;
-      const outputName = sanitizedVariant
-        ? `${blockName}--${sanitizedVariant}`
-        : blockName;
+    uniqueBlocks.forEach(({ el, info }) => {
+      const { outputName } = info;
 
       // Validate outputName to prevent invalid file names
       if (!/^[\w-]+$/.test(outputName)) {
@@ -58,19 +74,21 @@ async function extractBlocksFromFile(inputFile: string): Promise<void> {
 
       $(el).removeAttr("data-component");
       $(el).removeAttr("data-component-variant");
+      $(el).removeAttr("data-testid");
 
       const extractedHtml = $.html(el);
 
-      const filePath = path.join(OUTPUT_DIR, `${outputName}.html`);
+      const filePath = path.join(OUTPUT_SECTIONS_DIR, `${outputName}.html`);
       fs.writeFileSync(filePath, extractedHtml);
 
       console.log(`✅ [${fileName}] ${outputName}.html generated`);
     });
 
     console.log(
-      `✅ [${fileName}] Done! ${uniqueBlocks.length} files ready in ${OUTPUT_DIR}`,
+      `✅ [${fileName}] Done! ${uniqueBlocks.length} files ready in ${OUTPUT_SECTIONS_DIR}`,
     );
 
+    $("[data-testid]").removeAttr("data-testid");
     $('[data-type="slot"]').empty();
 
     const templatePath = path.join(OUTPUT_TEMPLATE_DIR, fileName);
@@ -89,8 +107,8 @@ async function extractBlocks(): Promise<void> {
     process.exit(1);
   }
 
-  if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  if (!fs.existsSync(OUTPUT_SECTIONS_DIR)) {
+    fs.mkdirSync(OUTPUT_SECTIONS_DIR, { recursive: true });
   }
 
   if (!fs.existsSync(OUTPUT_TEMPLATE_DIR)) {
