@@ -1,6 +1,9 @@
 <script props>
   module.exports = {
-    class: props.class || ''
+    class: props.class || '',
+    productTitle: props.productTitle || page.contents.newsletter.featured.product.title || 'Titre du produit',
+    productDescription: props.productDescription || page.contents.newsletter.featured.product.description || 'Description du produit',
+    productCta: props.productCta || page.contents.newsletter.featured.product.cta || 'En savoir plus',
   }
 
 </script>
@@ -15,12 +18,13 @@
   <fill:rightColumn>
     <x-atoms.wrapper class="p-4  text-slate-800  dark:text-slate-200 w-full">
 
-      <x-atoms.title tag="h3">Produit 1</x-atoms.title>
+      <x-atoms.title tag="h3">{{page.contents.newsletter.featured.product.title}}</x-atoms.title>
 
-      <p>Description du produit</p>
+      <p>{{ page.contents.newsletter.featured.product.description }}</p>
       <x-spacer height="16px"></x-spacer>
-      <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="no-underline" msoLabel="En savoir plus">
-        En savoir plus
+      <x-atoms.btn isPrimary link="https://www.google.fr" title="google" class="no-underline"
+        msoLabel="{{ page.contents.newsletter.featured.product.cta }}">
+        {{ page.contents.newsletter.featured.product.cta }}
       </x-atoms.btn>
       <x-spacer height="16px"></x-spacer>
     </x-atoms.wrapper>

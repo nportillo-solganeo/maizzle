@@ -10,7 +10,6 @@ interface TokenCache {
 
 interface AssetInfo {
   id: number;
-  typeId: number | undefined;
 }
 
 interface AssetType {
@@ -28,7 +27,6 @@ interface AssetPayload {
 interface SfmcAsset {
   name: string;
   id: number;
-  assetType?: { id: number };
 }
 
 interface SfmcAssetsResponse {
@@ -103,7 +101,7 @@ async function fetchExistingAssets(
     $filter: "name like '[Maizzle]%'",
     $page: page,
     $pageSize: PAGE_SIZE,
-    $fields: "name,id,assetType",
+    $fields: "name,id",
   });
   const headers = { Authorization: `Bearer ${token}` };
   const url = `${REST_URL}/asset/v1/content/assets`;
@@ -152,10 +150,7 @@ async function fetchExistingAssets(
   ];
 
   return new Map(
-    allItems.map((item) => [
-      item.name,
-      { id: item.id, typeId: item.assetType?.id },
-    ]),
+    allItems.map((item) => [item.name, { id: item.id }]),
   );
 }
 
@@ -186,22 +181,6 @@ async function uploadAsset(
   };
 
   try {
-    const existingAsset = existingMap.get(assetName);
-
-    if (existingAsset && existingAsset.typeId !== assetType.id) {
-      console.warn(
-        `⚠️ Type conflict for ${assetName} (Current: ${existingAsset.typeId} vs New: ${assetType.id})`,
-      );
-      console.warn(`🗑️ Deleting old asset for clean recreation...`);
-
-      await axios.delete(
-        `${REST_URL}/asset/v1/content/assets/${existingAsset.id}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-
-      existingMap.delete(assetName);
-    }
-
     const currentAsset = existingMap.get(assetName);
 
     if (currentAsset) {
@@ -232,33 +211,6 @@ async function uploadAsset(
       );
     }
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const validationErrors: Array<{ errorcode: number }> =
-        error.response?.data?.validationErrors ?? [];
-      const isTypeMismatch = validationErrors.some(
-        (e) => e.errorcode === 118085,
-      );
-
-      if (isTypeMismatch && retryCount === 0) {
-        const existingId = existingMap.get(assetName)?.id;
-        console.warn(
-          `⚠️  Type mismatch for ${assetName} (ID: ${existingId}) — deleting and recreating...`,
-        );
-        await axios.delete(
-          `${REST_URL}/asset/v1/content/assets/${existingId}`,
-          { headers: { Authorization: `Bearer ${token}` } },
-        );
-        existingMap.delete(assetName);
-        return uploadAsset(
-          filePath,
-          existingMap,
-          categoryId,
-          retryCount + 1,
-          assetType,
-        );
-      }
-    }
-
     if (retryCount < MAX_RETRIES) {
       const delayMs = (retryCount + 1) * 2000;
       console.warn(
