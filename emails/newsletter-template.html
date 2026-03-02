@@ -2,6 +2,7 @@
 preheader: Newsletter email template
 title: Newsletter Solganeo
 bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-base
+productCount: 6
 ---
 
 
@@ -41,7 +42,8 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
     <tr>
       <td align="center" class="p-0 bg-slate-400 dark:bg-slate-700" data-type="slot"
         data-key="newsletter-featured-unlocked">
-        <x-atoms.title tag="h2" class="text-left px-4">{{page.contents.newsletter.featured.sectionTitle}}</x-atoms.title>
+        <x-atoms.title tag="h2"
+          class="text-left px-4">{{page.contents.newsletter.featured.sectionTitle}}</x-atoms.title>
 
         <x-product_2cols-img--left productTitle="{{page.contents.newsletter.featured.product.title}}"
           productDescription="{{page.contents.newsletter.featured.product.description}}"
@@ -58,7 +60,8 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
 
     <tr>
       <td align="center" class="p-0" data-type="slot" data-key="newsletter-products-unlocked">
-        <x-atoms.title tag="h2" class="text-left px-4">{{page.contents.newsletter.products.sectionTitle}}</x-atoms.title>
+        <x-atoms.title tag="h2"
+          class="text-left px-4">{{page.plural(page.contents.newsletter.products.sectionTitle,page.productCount>1)}}</x-atoms.title>
 
         <each loop="i in [1,2,3]">
           <x-atoms.twocols isResponsive="true" widthLeft="w-1/2" widthRight="w-1/2" hAlign="center" vAlign="top">
@@ -72,7 +75,8 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">{{page.contents.newsletter.products.productTitle}} {{i*2-1}}</x-atoms.title>
+                  <x-atoms.title tag="h3">{{page.plural(page.contents.newsletter.products.productTitle)}}
+                    {{i*2-1}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
                   <p>{{page.contents.newsletter.products.productDescription}} {{i*2-1}}</p>
@@ -94,7 +98,8 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
                 </fill:image>
 
                 <fill:title>
-                  <x-atoms.title tag="h3">{{page.contents.newsletter.products.productTitle}} {{i*2}}</x-atoms.title>
+                  <x-atoms.title tag="h3">{{page.plural(page.contents.newsletter.products.productTitle)}}
+                    {{i*2}}</x-atoms.title>
                 </fill:title>
                 <fill:description>
                   <p>{{page.contents.newsletter.products.productDescription}} {{i*2}}</p>
@@ -112,18 +117,3 @@ bodyClass: bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font
         </each>
       </td>
     </tr>
-
-    <tr>
-      <td align="center" data-type="slot" data-key="newsletter-footer-unlocked">
-        <x-footer>
-          <p class="text-center text-sm text-slate-600 dark:text-slate-400">{{page.contents.newsletter.footer.copyright}}</p>
-        </x-footer>
-      </td>
-    </tr>
-  </table>
-  <outlook>
-    </td>
-    </tr>
-    </table>
-  </outlook>
-</x-main>

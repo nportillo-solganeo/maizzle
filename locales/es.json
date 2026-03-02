@@ -23,9 +23,9 @@
       }
     },
     "products": {
-      "sectionTitle": "Últimos productos agregados",
+      "sectionTitle": "Último producto agregado|Últimos productos agregados",
       "cta": "Descubrir",
-      "productTitle": "Producto",
+      "productTitle": "Producto|Productos",
       "productDescription": "Descripción del producto"
     },
     "footer": {

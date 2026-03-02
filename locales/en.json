@@ -23,9 +23,9 @@
       }
     },
     "products": {
-      "sectionTitle": "Latest Products",
+      "sectionTitle": "Latest Product|Latest Products",
       "cta": "Discover",
-      "productTitle": "Product",
+      "productTitle": "Product|Products",
       "productDescription": "Product description"
     },
     "footer": {

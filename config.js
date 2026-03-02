@@ -24,6 +24,11 @@ if (!existsSync(localePath)) {
 /** @type {import('@maizzle/framework').Config} */
 const t = JSON.parse(readFileSync(localePath, 'utf8'))
 
+function plural(translation, isPlural) {
+  const [singular, pluralForm] = translation.split('|')
+  return isPlural ? (pluralForm ?? singular) : singular
+}
+
 export default {
   build: {
     content: ['emails/**/*.html'],
@@ -37,4 +42,5 @@ export default {
   },
   language: locale,
   contents: t,
+  plural,
 }
